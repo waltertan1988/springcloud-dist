@@ -1,0 +1,39 @@
+# Eureka
+eureka:
+    client:
+        fetch-registry: true
+        register-with-eureka: true
+        service-url:
+            defaultZone: http://localhost:7001/eureka/
+# Feign
+feign:
+    client:
+        config:
+            default:
+                connect-timeout: 10000
+                read-timeout: 10000
+    # Feign hystrix
+    hystrix:
+        enabled: true
+# Actuator
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+server:
+    port: 9101
+spring:
+    application:
+        name: res
+    # DataSource
+    datasource:
+        password: ''
+        url: jdbc:mysql://localhost/lychee?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+        username: root
+    # JPA
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        hibernate:
+            ddl-auto: update
+        show-sql: true

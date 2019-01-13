@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.walter</groupId>
+	<artifactId>springcloud-dist</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>springcloud-dist</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<modules>
+		<module>springcloud-parent</module>
+		
+		<module>springcloud-tool-eureka</module>
+		<module>springcloud-tool-hystrix-dashboard</module>
+		<module>springcloud-tool-gateway</module>
+
+		<module>springcloud-doc</module>
+		
+		<module>springcloud-base-parent</module>
+		<module>springcloud-base-repository</module>
+		<module>springcloud-base-service</module>
+		
+		<module>springcloud-repository</module>
+		<module>springcloud-service</module>
+		<module>springcloud-admin</module>
+		<module>springcloud-webapp</module>
+		
+		<module>springcloud-api-parent</module>
+		<module>springcloud-api-user</module>
+		<module>springcloud-api-user-impl</module>
+		<module>springcloud-api-res</module>
+		<module>springcloud-api-res-impl</module>
+	</modules>
+</project>
