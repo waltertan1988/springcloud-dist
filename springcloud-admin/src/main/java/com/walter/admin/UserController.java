@@ -15,13 +15,13 @@ import com.walter.base.entity.JpaSysUser;
 import com.walter.base.security.authenticate.UserRoleChangedEvent;
 import com.walter.base.security.authorize.ResourceRoleChangedEvent;
 import com.walter.service.vo.ResourceVo;
-import com.walter.user.api.UserApi;
+import com.walter.user.api.feign.UserFeignApi;
 
 @Controller
 public class UserController extends BaseAdminController {
 	
 	@Autowired
-	private UserApi userApi;
+	private UserFeignApi userFeignApi;
 	
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -29,7 +29,7 @@ public class UserController extends BaseAdminController {
 	@GetMapping("/getUser")
 	@ResponseBody
 	public JpaSysUser getUser(@RequestParam String username) {
-		JpaSysUser user = userApi.getUser(username);
+		JpaSysUser user = userFeignApi.getUser(username);
 		
 //		Set<String> roleCodes = new HashSet<String>();
 //		roleCodes.add("ROLE_ADMIN");

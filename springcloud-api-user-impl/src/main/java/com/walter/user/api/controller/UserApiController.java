@@ -3,32 +3,32 @@ package com.walter.user.api.controller;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.walter.base.entity.JpaSysUser;
 import com.walter.base.repository.SysUserRepository;
-import com.walter.res.api.ResApi;
+import com.walter.res.api.feign.ResApiFeign;
+import com.walter.user.api.UserApi;
 
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-public class UserApiController extends BaseUserApiController {
+public class UserApiController extends BaseUserApiController implements UserApi{
 	
 	@Autowired
-	private ResApi resApi;
+	private ResApiFeign resApiFeign;
 	
 	@Autowired
 	private SysUserRepository sysUserRepository;
 
-	@GetMapping("/{username}")
 	@HystrixCommand(fallbackMethod="getUserFallback")
-	public JpaSysUser getUser(@PathVariable("username") String username) {
+	@Override
+	public JpaSysUser getUser(@PathVariable("username")String username) {
 		JpaSysUser user = sysUserRepository.findByUsername(username);
-		resApi.listMenu(username);
+		resApiFeign.listMenu(username);
 		
 		return user;
 	}
