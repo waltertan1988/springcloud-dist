@@ -3,6 +3,7 @@ package com.walter.user.api.controller;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 public class UserApiController extends BaseUserApiController implements UserApi{
+	
+	@Value("${server.port}")
+	private Integer port;
 	
 	@Autowired
 	private ResApiFeign resApiFeign;
@@ -37,6 +41,7 @@ public class UserApiController extends BaseUserApiController implements UserApi{
 		log.error("Hystrix fallback method called...");
 		
 		JpaSysUser user = new JpaSysUser();
+		user.setCreatedBy(String.valueOf(this.port));
 		user.setCreatedDate(LocalDateTime.now());
 		user.setLastModifiedDate(LocalDateTime.now());
 		
