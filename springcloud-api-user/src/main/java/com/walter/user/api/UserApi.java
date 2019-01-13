@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.walter.base.entity.JpaSysUser;
 
-@FeignClient("user")
+@FeignClient(name="user", path="/api/user")
 public interface UserApi {
 
-	@GetMapping("/api/user/{username}")
+	@GetMapping("/{username}")
 	public JpaSysUser getUser(@PathVariable("username") String username);
 }

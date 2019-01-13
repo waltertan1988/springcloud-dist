@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.walter.base.entity.JpaSysMenu;
 
-@FeignClient("res")
+@FeignClient(name="res", path="/api/res")
 public interface ResApi {
 
-	@GetMapping("/api/res/listMenu/{username}")
+	@GetMapping("/listMenu/{username}")
 	public List<JpaSysMenu> listMenu(@PathVariable("username") String username);
 }
