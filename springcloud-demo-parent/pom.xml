@@ -12,7 +12,7 @@
 		<relativePath>../springcloud-base-parent/pom.xml</relativePath>
 	</parent>
 
-	<name>springcloud-base-parent</name>
+	<name>springcloud-demo-parent</name>
 	<url>http://maven.apache.org</url>
 
 	<dependencyManagement>

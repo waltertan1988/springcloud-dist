@@ -19,15 +19,24 @@
 			<groupId>com.walter</groupId>
 			<artifactId>springcloud-api-user</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.walter</groupId>
 			<artifactId>springcloud-api-res</artifactId>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>com.walter</groupId>
 			<artifactId>springcloud-demo-repository</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

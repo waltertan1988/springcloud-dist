@@ -11,7 +11,7 @@
 	<artifactId>springcloud-api-res-impl</artifactId>
 	<packaging>jar</packaging>
 
-	<name>springcloud-api-user-impl</name>
+	<name>springcloud-api-res-impl</name>
 	<description>Demo project for Spring Boot</description>
 
 	<dependencies>
@@ -19,10 +19,19 @@
 			<groupId>com.walter</groupId>
 			<artifactId>springcloud-api-res</artifactId>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>com.walter</groupId>
 			<artifactId>springcloud-demo-repository</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

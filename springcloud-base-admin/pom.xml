@@ -11,7 +11,7 @@
 	<artifactId>springcloud-base-admin</artifactId>
 	<packaging>jar</packaging>
 
-	<name>springcloud-admin</name>
+	<name>springcloud-base-admin</name>
 	<url>http://maven.apache.org</url>
 
 	<dependencies>

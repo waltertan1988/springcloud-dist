@@ -11,7 +11,7 @@
 	<artifactId>springcloud-api-res</artifactId>
 	<packaging>jar</packaging>
 
-	<name>springcloud-api-user</name>
+	<name>springcloud-api-res</name>
 	<description>Demo project for Spring Boot</description>
 	
 	<dependencies>
