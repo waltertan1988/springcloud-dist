@@ -38,7 +38,7 @@ public class UserApiController extends BaseUserApiController implements UserApi{
 	}
 	
 	public JpaSysUser getUserFallback(String username, Throwable throwable){
-		log.error("Hystrix fallback method called...");
+		log.error("Hystrix fallback method called...", throwable);
 		
 		JpaSysUser user = new JpaSysUser();
 		user.setCreatedBy(String.valueOf(this.port));
