@@ -10,11 +10,21 @@ feign:
     client:
         config:
             default:
-                connect-timeout: 2000
-                read-timeout: 2000
+                connect-timeout: 4000
+                read-timeout: 4000
     # Feign Hystrix
     hystrix:
         enabled: true
+
+# Hystrix
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+
 # Actuator
 management:
     endpoints:
