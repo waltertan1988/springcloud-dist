@@ -15,11 +15,11 @@
 
 	<modules>
 		<module>springcloud-parent</module>
-		
+		<!-- 
 		<module>springcloud-tool-eureka</module>
 		<module>springcloud-tool-hystrix-dashboard</module>
 		<module>springcloud-tool-gateway</module>
-
+		 -->
 		<module>springcloud-doc</module>
 		
 		<module>springcloud-base-parent</module>
