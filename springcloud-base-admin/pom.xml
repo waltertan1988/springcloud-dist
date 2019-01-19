@@ -8,7 +8,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../springcloud-base-parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>springcloud-admin</artifactId>
+	<artifactId>springcloud-base-admin</artifactId>
 	<packaging>jar</packaging>
 
 	<name>springcloud-admin</name>
@@ -16,12 +16,18 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.walter</groupId>
-			<artifactId>springcloud-base-admin</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.walter</groupId>
-			<artifactId>springcloud-service</artifactId>
+			<artifactId>springcloud-base-service</artifactId>
 		</dependency>
 	</dependencies>
 </project>

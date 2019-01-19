@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.walter.base.entity.JpaSysUser;
+import com.walter.base.openapi.OpenApi;
 import com.walter.base.security.authenticate.UserRoleChangedEvent;
 import com.walter.base.security.authorize.ResourceRoleChangedEvent;
 import com.walter.service.vo.ResourceVo;
@@ -27,7 +28,7 @@ public class UserController extends BaseAdminController {
 	private ApplicationContext applicationContext;
 
 	@GetMapping("/getUser")
-	@ResponseBody
+	@OpenApi
 	public JpaSysUser getUser(@RequestParam String username) {
 		JpaSysUser user = userFeignApi.getUser(username);
 		

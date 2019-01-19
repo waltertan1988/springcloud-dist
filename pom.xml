@@ -25,6 +25,7 @@
 		<module>springcloud-base-parent</module>
 		<module>springcloud-base-repository</module>
 		<module>springcloud-base-service</module>
+		<module>springcloud-base-admin</module>
 		
 		<module>springcloud-repository</module>
 		<module>springcloud-service</module>
