@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"com.walter", "org.walter"})
 @EnableFeignClients(basePackages="com.walter")
 @EnableCircuitBreaker
 public class ApiUserApplication {

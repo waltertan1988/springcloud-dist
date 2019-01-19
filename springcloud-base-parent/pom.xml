@@ -40,7 +40,12 @@
 				<version>2.5</version>
 				<scope>provided</scope>
 			</dependency>
-
+			
+			<dependency>
+				<groupId>com.walter</groupId>
+				<artifactId>springcloud-base-webapp</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.walter</groupId>
 				<artifactId>springcloud-base-admin</artifactId>
@@ -54,33 +59,6 @@
 			<dependency>
 				<groupId>com.walter</groupId>
 				<artifactId>springcloud-base-repository</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.walter</groupId>
-				<artifactId>springcloud-api-user</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.walter</groupId>
-				<artifactId>springcloud-api-res</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.walter</groupId>
-				<artifactId>springcloud-admin</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.walter</groupId>
-				<artifactId>springcloud-service</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.walter</groupId>
-				<artifactId>springcloud-repository</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

@@ -26,11 +26,13 @@
 		<module>springcloud-base-repository</module>
 		<module>springcloud-base-service</module>
 		<module>springcloud-base-admin</module>
+		<module>springcloud-base-webapp</module>
 		
-		<module>springcloud-repository</module>
-		<module>springcloud-service</module>
-		<module>springcloud-admin</module>
-		<module>springcloud-webapp</module>
+		<module>springcloud-demo-parent</module>
+		<module>springcloud-demo-repository</module>
+		<module>springcloud-demo-service</module>
+		<module>springcloud-demo-admin</module>
+		<module>springcloud-demo-webapp</module>
 		
 		<module>springcloud-api-parent</module>
 		<module>springcloud-api-user</module>

@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.walter.base.entity.JpaSysMenu;
 
-import com.walter.base.entity.JpaSysMenu;
 import com.walter.res.api.ResApi;
 
 @RestController

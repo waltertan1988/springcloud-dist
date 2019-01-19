@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.walter.base.entity.JpaSysUser;
+import org.walter.base.repository.SysUserRepository;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.walter.base.entity.JpaSysUser;
-import com.walter.base.repository.SysUserRepository;
 import com.walter.res.api.feign.ResApiFeign;
 import com.walter.user.api.UserApi;
 

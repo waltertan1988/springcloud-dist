@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.walter</groupId>
-			<artifactId>springcloud-repository</artifactId>
+			<artifactId>springcloud-demo-repository</artifactId>
 		</dependency>
 	</dependencies>
 </project>
