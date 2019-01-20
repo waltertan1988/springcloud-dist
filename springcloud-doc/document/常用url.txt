@@ -6,3 +6,9 @@ http://localhost:7140/hystrix
 
 webapp:
 http://localhost:7010/lychee/admin/getUser?username=0009785
+
+Zuul默认转发微服务（http://localhost:{zuul_port}/{service_name}/{service_url}）：
+http://localhost:7120/user/api/user/0009785
+
+Zuul配置路由后的转发微服务：
+http://localhost:7120/gateway/user/api/user/0009785

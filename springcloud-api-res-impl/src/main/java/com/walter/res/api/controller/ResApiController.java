@@ -15,11 +15,11 @@ public class ResApiController extends BaseResApiController implements ResApi {
 	
 	@Override
 	public List<JpaSysMenu> listMenu(@PathVariable("username")String username) {
-		try {
-			TimeUnit.SECONDS.sleep(2);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			TimeUnit.SECONDS.sleep(2);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		return new ArrayList<JpaSysMenu>();
 	}
 }
