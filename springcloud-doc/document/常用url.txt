@@ -12,3 +12,4 @@ http://localhost:7120/user/api/user/0009785
 
 Zuul配置路由后的转发微服务：
 http://localhost:7120/gateway/user/api/user/0009785
+http://localhost:7120/gateway/res/api/res/listMenu/0009785
