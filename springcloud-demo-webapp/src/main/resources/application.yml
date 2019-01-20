@@ -9,7 +9,7 @@ eureka:
         fetch-registry: true
         register-with-eureka: false
         service-url:
-            defaultZone: http://localhost:7001/eureka/
+            defaultZone: http://localhost:7110/eureka/
 # Feign
 feign:
     client:
