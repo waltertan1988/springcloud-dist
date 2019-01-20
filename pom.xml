@@ -34,6 +34,8 @@
 		<module>springcloud-demo-admin</module>
 		<module>springcloud-demo-webapp</module>
 		
+		<module>springcloud-demo-zuul</module>
+		
 		<module>springcloud-api-parent</module>
 		<module>springcloud-api-user</module>
 		<module>springcloud-api-user-impl</module>
