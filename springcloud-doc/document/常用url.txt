@@ -1,0 +1,8 @@
+Eureka:
+http://localhost:7110/
+
+Hystrix-DashBoard:
+http://localhost:7140/hystrix
+
+webapp:
+http://localhost:7010/lychee/admin/getUser?username=0009785
