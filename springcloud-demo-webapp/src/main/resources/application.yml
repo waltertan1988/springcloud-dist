@@ -39,7 +39,7 @@ ribbon:
     enabled: true
 
 server:
-    port: 7080
+    port: 7010
     servlet:
         context-path: /lychee
 spring:

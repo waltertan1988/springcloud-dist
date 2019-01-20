@@ -32,7 +32,7 @@ management:
             exposure:
                 include: '*'
 server:
-    port: 9001
+    port: 7030
 spring:
     application:
         name: user
