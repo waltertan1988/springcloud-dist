@@ -13,10 +13,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.walter.res.api.feign.ResApiFeign;
 import com.walter.user.api.UserApi;
 
-import lombok.extern.slf4j.Slf4j;
-
 @RestController
-@Slf4j
 public class UserApiController extends BaseUserApiController implements UserApi{
 	
 	@Value("${server.port}")
@@ -31,6 +28,7 @@ public class UserApiController extends BaseUserApiController implements UserApi{
 	@HystrixCommand(fallbackMethod="getUserFallback")
 	@Override
 	public JpaSysUser getUser(@PathVariable("username")String username) {
+		log.info("");
 		JpaSysUser user = sysUserRepository.findByUsername(username);
 		resApiFeign.listMenu(username);
 		

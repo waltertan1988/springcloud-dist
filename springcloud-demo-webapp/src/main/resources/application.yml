@@ -43,6 +43,8 @@ server:
     servlet:
         context-path: /lychee
 spring:
+    application:
+        name: demo-webapp
     # Freemarker
     freemarker:
         charset: UTF-8

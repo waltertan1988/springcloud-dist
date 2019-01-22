@@ -37,6 +37,8 @@ public class UserController extends BaseAdminController {
 //		roleCodes.add("ROLE_LOGIN_USER");
 //		this.updateUserRole("asnpgit", roleCodes);
 		
+		log.info("");
+		
 		return user;
 	}
 	

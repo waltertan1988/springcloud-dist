@@ -2,7 +2,6 @@ package com.walter.res.api.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +19,7 @@ public class ResApiController extends BaseResApiController implements ResApi {
 //		} catch (InterruptedException e) {
 //			e.printStackTrace();
 //		}
+		log.info("");
 		return new ArrayList<JpaSysMenu>();
 	}
 }
