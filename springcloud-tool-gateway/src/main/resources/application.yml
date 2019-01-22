@@ -1,6 +1,13 @@
 spring:
   application:
     name: gateway
+  # Zipkin
+  zipkin:
+    base-url: http://localhost:9411/
+  # Sleuth
+  sleuth:
+    sampler:
+      probability: 1
 server:
   port: 7130
 

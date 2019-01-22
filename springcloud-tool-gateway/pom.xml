@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.walter</groupId>
-		<artifactId>springcloud-parent</artifactId>
+		<artifactId>springcloud-api-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../springcloud-parent/pom.xml</relativePath>
+		<relativePath>../springcloud-api-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>springcloud-tool-gateway</artifactId>
 	<packaging>jar</packaging>
@@ -15,38 +15,29 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>false</optional>
-		</dependency>
-	
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		
-		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.walter</groupId>
+			<artifactId>springcloud-api-res</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.walter</groupId>
+			<artifactId>springcloud-api-user</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.walter</groupId>
+			<artifactId>springcloud-demo-repository</artifactId>
 		</dependency>
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>

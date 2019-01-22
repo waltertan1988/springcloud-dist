@@ -47,7 +47,13 @@ spring:
         hibernate:
             ddl-auto: update
         show-sql: true
-
+    # Zipkin
+    zipkin:
+        base-url: http://localhost:9411/
+    # Sleuth
+    sleuth:
+        sampler:
+            probability: 1
 # Zuul
 zuul:
   # 取消Zuul的默认路由规则
