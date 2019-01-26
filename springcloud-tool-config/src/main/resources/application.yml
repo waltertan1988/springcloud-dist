@@ -4,6 +4,15 @@ server:
 spring:
   application:
     name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/waltertan1988public/springcloud-dist-config
+          username: waltertan1988public
+          password: onetwo12
+          timeout: 5
+          default-label: master
 
 # Eureka
 eureka:
