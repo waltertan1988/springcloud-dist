@@ -14,25 +14,30 @@ node {
 		}
 
 		stage('Maven Build') {
-			def MAVEN_HOME = tool "${MAVEN_TOOL}"
+			final def MAVEN_HOME = tool "${MAVEN_TOOL}"
 			sh script: "${MAVEN_HOME}/bin/mvn -f ${env.WORKSPACE}/${MODULE} clean package -Dmaven.test.skip=true"
 		}
 		
 		stage('Docker Image Build'){
-			final def BUILD_VERSION = sh returnStdout: true, script: "cat ${env.WORKSPACE}/${MODULE}/pom.xml | grep '</version>' | awk -F '>' '{print \$2}'| awk -F '<' '{print \$1}'"
+			final def BUILD_VERSION = getXmlValue("${env.WORKSPACE}/${MODULE}/pom.xml",'</version>')
+			
 			sh script: """
 				mkdir ${DOCKER_FILE_FOLDER}
 				cp ${env.WORKSPACE}/Dockerfile ${DOCKER_FILE_FOLDER}
-				cp ${env.WORKSPACE}/${MODULE}/target/${MODULE}-${BUILD_VERSION}.jar ${DOCKER_FILE_FOLDER}/${MODULE}-${BUILD_VERSION}.jar
+				cp ${env.WORKSPACE}/${MODULE}/target/${MODULE}-${BUILD_VERSION}.jar ${DOCKER_FILE_FOLDER}
 			"""
 		
-			def existingImage = sh returnStdout: true, script: "sudo /usr/bin/docker image ls | grep ${MODULE}"
-			if(existingImage != null && existingImage != ""){
-			    sh script: "sudo /usr/bin/docker image rm ${IMAGE_NAME_TAG}"
-			    //TODO 删除容器
+			try{
+				def existingImage = sh returnStdout: true, script: "sudo /usr/bin/docker image ls | grep ${MODULE}"
+				if(existingImage != null && existingImage != ""){
+				    sh script: "sudo /usr/bin/docker image rm ${IMAGE_NAME_TAG}"
+				    //TODO 删除容器
+				}
+			}catch(e){
+				echo "[Info] No need to clear image ${IMAGE_NAME_TAG}"
 			}
 			
-			sh script: "sudo /usr/bin/docker build -t ${IMAGE_NAME_TAG} --build-arg jarFile=${MODULE}-${BUILD_VERSION}.jar port=${SERVICE_PORT} ${DOCKER_FILE_FOLDER}"
+			sh script: "sudo /usr/bin/docker build -t ${IMAGE_NAME_TAG} ${DOCKER_FILE_FOLDER}"
 		}
 		
 		stage('Docker Image Pull'){
@@ -50,4 +55,9 @@ node {
 	} finally{
 		sh script: "rm -rf ${DOCKER_FILE_FOLDER}"
 	}
+}
+
+def getXmlValue(xml, tag){
+	def value = sh returnStdout: true, script: "cat ${xml} | grep '${tag}' | awk -F '>' '{print \$2}'| awk -F '<' '{print \$1}' | tr '\\n' ' '"
+	return value.trim()
 }
