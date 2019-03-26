@@ -5,4 +5,4 @@ FROM openjdk:8
 MAINTAINER waltertan1988@163.com
 COPY ${jarFile} ${containerPath}/${jarFile}
 EXPOSE ${port}
-CMD java -jar ${containerPath}/${jarName} --server.port=${port}
+CMD java -jar ${containerPath}/${jarFile} --server.port=${port}

@@ -31,13 +31,18 @@ node {
 				def existingImage = sh returnStdout: true, script: "sudo /usr/bin/docker image ls | grep ${MODULE}"
 				if(existingImage != null && existingImage != ""){
 				    sh script: "sudo /usr/bin/docker image rm ${IMAGE_NAME_TAG}"
-				    //TODO 删除容器
 				}
 			}catch(e){
 				echo "[Info] No need to clear image ${IMAGE_NAME_TAG}"
 			}
 			
-			sh script: "sudo /usr/bin/docker build -t ${IMAGE_NAME_TAG} ${DOCKER_FILE_FOLDER}"
+			sh script: """
+				sudo /usr/bin/docker build \
+				-t ${IMAGE_NAME_TAG} \
+				--build-arg jarFile=${MODULE}-${BUILD_VERSION}.jar \
+				--build-arg port=${SERVICE_PORT} \
+				${DOCKER_FILE_FOLDER}
+			"""
 		}
 		
 		stage('Docker Image Pull'){
