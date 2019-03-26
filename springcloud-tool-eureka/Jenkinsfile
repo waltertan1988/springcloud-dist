@@ -3,50 +3,36 @@
 properties([gitLabConnection(''), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5'))])
 
 node {
-	def GITHUB_REPO = 'https://github.com/waltertan1988/springcloud-dist.git'
-	def MAVEN_TOOL = 'maven3.2.3'
-	def BUILD_MODULE = 'springcloud-tool-eureka'
-	def DOCKER_REGISTRY = 'centos7-tools:5000'
-	def DOCKER_FILE_FOLDER = "${env.WORKSPACE}/${BUILD_MODULE}/dockerfiledir"
-	def DOCKER_FILE = "${DOCKER_FILE_FOLDER}/Dockerfile"
-	def SERVICE_PORT = '7110'
-	def IMAGE_NAME_TAG = "${DOCKER_REGISTRY}/${BUILD_MODULE}:latest"
-
+	final def GITHUB_REPO = 'https://github.com/waltertan1988/springcloud-dist.git'
+	final def MAVEN_TOOL = 'maven3.2.3'
+	final def DOCKER_FILE_FOLDER = "${env.WORKSPACE}/${MODULE}/docker${env.BUILD_NUMBER}"
+	final def SERVICE_PORT = '7110'
+	final def IMAGE_NAME_TAG = "${DOCKER_REGISTRY}/${MODULE}:latest"
 	try {
 		stage('Checkout') {
-			checkout([$class: 'GitSCM', branches: [[name: 'develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github', url: GITHUB_REPO]]])
+			checkout([$class: 'GitSCM', branches: [[name: "${BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github', url: GITHUB_REPO]]])
 		}
 
 		stage('Maven Build') {
-			dir("${env.WORKSPACE}/${BUILD_MODULE}") {
-			    def MAVEN_HOME = tool "${MAVEN_TOOL}"
-			    sh label: 'mvn', script: "${MAVEN_HOME}/bin/mvn clean package -Dmaven.test.skip=true"
-			}
-		}
-
-		stage('Create DockerFile') {
-			def CONTAINER_JAR_DIR = '/work'
-			sh label: 'create dockerfile folder', script: "mkdir ${DOCKER_FILE_FOLDER}"
-			sh label: 'copy package into dockerfile folder', script: "cp ${env.WORKSPACE}/${BUILD_MODULE}/target/${BUILD_MODULE}*.jar ${DOCKER_FILE_FOLDER}/${BUILD_MODULE}.jar"
-			sh label: 'create dockerfile', script: """
-					echo "FROM openjdk:8" > ${DOCKER_FILE}
-					echo "MAINTAINER waltertan1988@163.com" >> ${DOCKER_FILE}
-					echo "COPY ${BUILD_MODULE}.jar ${CONTAINER_JAR_DIR}/${BUILD_MODULE}.jar" >> ${DOCKER_FILE}
-					echo "EXPOSE ${SERVICE_PORT}" >> ${DOCKER_FILE}
-					echo "CMD java -jar ${CONTAINER_JAR_DIR}/${BUILD_MODULE}.jar --server.port=${SERVICE_PORT}" >> ${DOCKER_FILE}
-				"""
+			def MAVEN_HOME = tool "${MAVEN_TOOL}"
+			sh script: "${MAVEN_HOME}/bin/mvn -f ${env.WORKSPACE}/${MODULE} clean package -Dmaven.test.skip=true"
 		}
 		
 		stage('Docker Image Build'){
-			def existingImage = sh label: 'clear docker image', returnStdout: true, script: "sudo /usr/bin/docker image ls | grep ${BUILD_MODULE}"
+			final def BUILD_VERSION = sh returnStdout: true, script: "cat ${env.WORKSPACE}/${MODULE}/pom.xml | grep '</version>' | awk -F '>' '{print \$2}'| awk -F '<' '{print \$1}'"
+			sh script: """
+				mkdir ${DOCKER_FILE_FOLDER}
+				cp ${env.WORKSPACE}/Dockerfile ${DOCKER_FILE_FOLDER}
+				cp ${env.WORKSPACE}/${MODULE}/target/${MODULE}-${BUILD_VERSION}.jar ${DOCKER_FILE_FOLDER}/${MODULE}-${BUILD_VERSION}.jar
+			"""
+		
+			def existingImage = sh returnStdout: true, script: "sudo /usr/bin/docker image ls | grep ${MODULE}"
 			if(existingImage != null && existingImage != ""){
-			    sh label: 'clear docker image', script: "sudo /usr/bin/docker image rm ${IMAGE_NAME_TAG}"
+			    sh script: "sudo /usr/bin/docker image rm ${IMAGE_NAME_TAG}"
 			    //TODO 删除容器
 			}
 			
-			dir("${DOCKER_FILE_FOLDER}"){
-				sh label: 'build docker image', script: "sudo /usr/bin/docker build -t ${IMAGE_NAME_TAG} ."
-			}
+			sh script: "sudo /usr/bin/docker build -t ${IMAGE_NAME_TAG} --build-arg jarFile=${MODULE}-${BUILD_VERSION}.jar port=${SERVICE_PORT} ${DOCKER_FILE_FOLDER}"
 		}
 		
 		stage('Docker Image Pull'){
@@ -56,12 +42,12 @@ node {
 		stage('Deployment'){
 			// 部署
 		}
-		
+
 		currentBuild.result = "SUCCESS"
 	} catch (e) {
 		println e.getMessage()
 		currentBuild.result = "FAILURE"
 	} finally{
-		sh label: 'clear temp folder', script: "rm -rf ${DOCKER_FILE_FOLDER}"
+		sh script: "rm -rf ${DOCKER_FILE_FOLDER}"
 	}
 }
