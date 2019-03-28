@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 import groovy.transform.Field;
+import java.util.HashSet;
+import java.util.Set;
 
 properties([gitLabConnection(''), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5'))])
 
@@ -10,7 +12,8 @@ properties([gitLabConnection(''), [$class: 'RebuildSettings', autoRebuild: false
 
 node {
 	final def DOCKER_FILE_FOLDER = "${env.WORKSPACE}/${MODULE}/docker${env.BUILD_NUMBER}"
-    final def IMAGE_NAME_WITH_TAG = "${DOCKER_REGISTRY}/${MODULE}:latest"
+	final def DOCKER_IMAGE_REPO = "${DOCKER_REGISTRY}/${MODULE}"
+    final def DOCKER_IMAGE_NAME = "${DOCKER_IMAGE_REPO}:latest"
     final def SERVICE_PORT = '7110'
     
 	try {
@@ -32,17 +35,26 @@ node {
 				cp ${env.WORKSPACE}/${MODULE}/target/${MODULE}-${BUILD_VERSION}.jar ${DOCKER_FILE_FOLDER}
 			"""
 		
-			def existingImageCount = sh returnStdout: true, script: "sudo /usr/bin/docker image ls | grep ${MODULE} | wc -l"
-			if(existingImageCount.toInteger() > 0){
-				stopAndDeleteDockerContainer(IMAGE_NAME_WITH_TAG)
-			    sh returnStatus: true, script: "sudo /usr/bin/docker image rm ${IMAGE_NAME_WITH_TAG}"
+			Set existingImageIdSet = getImageIdSet("${MODULE}")
+			if(existingImageIdSet.size() > 0){
+				stopAndRemoveDockerContainer("${MODULE}")
+				
+				for(String existingImageId : existingImageIdSet){
+					for(String existingContainerId : getContainerIdSet(existingImageId)){
+						stopAndRemoveDockerContainer(existingContainerId)
+					}
+				}
+				
+				for(String existingImageId : existingImageIdSet){
+					removeDockerImage(existingImageId)
+				}
 			}else{
-				info("No need to clear image ${IMAGE_NAME_WITH_TAG}")
+				info("No need to clear image ${DOCKER_IMAGE_NAME}")
 			}
 			
 			sh script: """
 				sudo /usr/bin/docker build \
-				-t ${IMAGE_NAME_WITH_TAG} \
+				-t ${DOCKER_IMAGE_NAME} \
 				--build-arg jarFile=${MODULE}-${BUILD_VERSION}.jar \
 				--build-arg port=${SERVICE_PORT} \
 				${DOCKER_FILE_FOLDER}
@@ -71,12 +83,45 @@ def getXmlValue(xml, tag){
 	return value.trim()
 }
 
-//TODO 这里要改为同时支持根据imageId来停止和删除
-def stopAndDeleteDockerContainer(imageNameWithTag){
+def getImageIdSet(label){
 	final def splitter = '|'
-	def containerIdStr = sh returnStdout: true, script: "sudo /usr/bin/docker ps -a | grep '${imageNameWithTag}' | awk -F ' ' '{print \$1}' | tr '\\n' '${splitter}'"
+	def imageIds = sh returnStdout: true, script: "sudo docker image ls | grep '${label}' | awk -F ' ' '{print \$3}' | tr '\\n' '${splitter}'"
+	info("imageIds=${imageIds}")
 	
-	echo ">>>>>>>containerIdStr=${containerIdStr}"
+	Set resultSet = new HashSet()
+	if(imageIds!=null && imageIds!=''){
+		for(String id : imageIds.split("\\${splitter}")){
+			resultSet.add(id)
+		}
+	}
+	
+	return resultSet
+}
+
+def getContainerIdSet(label){
+	final def splitter = '|'
+	def containerIds = sh returnStdout: true, script: "sudo docker ps -a | grep '${label}' | awk -F ' ' '{print \$1}' | tr '\\n' '${splitter}'"
+	info("containerIds=${containerIds}")
+	
+	Set resultSet = new HashSet()
+	if(containerIds!=null && containerIds!=''){
+		for(String id : containerIds.split("\\${splitter}")){
+			resultSet.add(id)
+		}
+	}
+	
+	return resultSet
+}
+
+def removeDockerImage(label){
+	sh returnStatus: true, script: "sudo /usr/bin/docker image rm ${label}"
+}
+
+def stopAndRemoveDockerContainer(label){
+	final def splitter = '|'
+	def containerIdStr = sh returnStdout: true, script: "sudo /usr/bin/docker ps -a | grep '${label}' | awk -F ' ' '{print \$1}' | tr '\\n' '${splitter}'"
+	info("containerIdStr=${containerIdStr}")
+	
 	if(containerIdStr!=null && containerIdStr!=''){
 		for(String cid : containerIdStr.split("\\${splitter}")){
 			info("stop and remove existing container: ${cid}")
