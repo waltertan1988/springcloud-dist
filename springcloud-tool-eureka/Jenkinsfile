@@ -22,11 +22,19 @@ node {
 		}
 
 		stage('Maven Build') {
+			// Maven打包
+			
 			final def MAVEN_HOME = tool "${MAVEN_TOOL}"
-			sh script: "${MAVEN_HOME}/bin/mvn -f ${env.WORKSPACE}/${MODULE} clean package -Dmaven.test.skip=true"
+			sh script: """
+				${MAVEN_HOME}/bin/mvn \
+				-f ${env.WORKSPACE}/${MODULE} \
+				clean package -Dmaven.test.skip=true
+			"""
 		}
 		
 		stage('Docker Image Build'){
+			// 构建镜像
+			
 			final def BUILD_VERSION = getXmlValue("${env.WORKSPACE}/${MODULE}/pom.xml",'</version>')
 			
 			sh script: """
@@ -49,7 +57,7 @@ node {
 					removeDockerImage(existingImageId)
 				}
 			}else{
-				info("No need to clear image ${DOCKER_IMAGE_NAME}")
+				info("No need to clear image for module ${MODULE}")
 			}
 			
 			sh script: """
@@ -63,10 +71,12 @@ node {
 		
 		stage('Docker Image Push'){
 			// 上传镜像
+			sh script: "sudo docker image push ${DOCKER_IMAGE_NAME}"
 		}
 		
 		stage('Deployment'){
 			// 部署
+			
 		}
 
 		currentBuild.result = "SUCCESS"
