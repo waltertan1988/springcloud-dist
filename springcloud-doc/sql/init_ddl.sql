@@ -52,9 +52,6 @@ CREATE TABLE `sys_action` (
   UNIQUE KEY `UK_38i63eoapprflv3esjdf9036d` (`action_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-
-Create Table
-
 CREATE TABLE `sys_menu` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `created_by` varchar(255) COLLATE utf8_bin DEFAULT NULL,
