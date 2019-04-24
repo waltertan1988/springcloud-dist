@@ -39,6 +39,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	protected void enableSecurity(HttpSecurity http) throws Exception {
-		
+		http.formLogin()
+			.and()
+			.authorizeRequests()
+			.anyRequest()
+			.authenticated();
 	}
 }

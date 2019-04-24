@@ -21,6 +21,18 @@ public class JpaSysUser extends AbstractAuditable {
 
 	@Column(length = 1, nullable = false, name = "GENDER")
 	private String gender;
+	
+	@Column(name = "IS_EXPIRED", nullable = false)
+	private boolean isExpired;
+	
+	@Column(name = "IS_LOCKED", nullable = false)
+	private boolean isLocked;
+	
+	@Column(name = "IS_PASSWORD_EXPIRED", nullable = false)
+	private boolean isPasswordExpired;
+	
+	@Column(name = "IS_ENABLED", nullable = false)
+	private boolean isEnabled;
 
 	public String getUsername() {
 		return username;
@@ -52,5 +64,37 @@ public class JpaSysUser extends AbstractAuditable {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public boolean isExpired() {
+		return isExpired;
+	}
+
+	public void setExpired(boolean isExpired) {
+		this.isExpired = isExpired;
+	}
+
+	public boolean isLocked() {
+		return isLocked;
+	}
+
+	public void setLocked(boolean isLocked) {
+		this.isLocked = isLocked;
+	}
+
+	public boolean isPasswordExpired() {
+		return isPasswordExpired;
+	}
+
+	public void setPasswordExpired(boolean isPasswordExpired) {
+		this.isPasswordExpired = isPasswordExpired;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 }

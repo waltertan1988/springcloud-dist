@@ -10,13 +10,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.walter.base.entity.JpaSysUser;
 import org.walter.base.entity.JpaSysUserRole;
 import org.walter.base.repository.SysUserRepository;
 import org.walter.base.repository.SysUserRoleRepository;
 
-@Service
+@Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private SysUserRepository sysUserRepository;
@@ -35,7 +35,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		for(JpaSysUserRole jpaSysUserRole : sysUserRoleRepository.findByUsername(username)) {
 			authoritySet.add(new SimpleGrantedAuthority(jpaSysUserRole.getRoleCode()));
 		}
-		UserDetails userDetails = new User(username, sysUser.getPassword(), authoritySet);
+//		AuthorityUtils
+		UserDetails userDetails = new User(username, sysUser.getPassword(), sysUser.isEnabled(), !sysUser.isExpired(), !sysUser.isPasswordExpired(), !sysUser.isLocked(), authoritySet);
 		
 		return userDetails;
 	}
