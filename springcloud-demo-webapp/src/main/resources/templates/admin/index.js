@@ -1,2 +1,2 @@
 
-alert("list");
+alert("index");
