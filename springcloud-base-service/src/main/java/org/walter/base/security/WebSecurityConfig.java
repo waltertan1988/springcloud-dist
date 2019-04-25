@@ -3,6 +3,7 @@ package org.walter.base.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,9 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	protected void enableSecurity(HttpSecurity http) throws Exception {
 		http.formLogin()
+			.loginPage(LOGIN_PAGE_URL)
+			.loginProcessingUrl("/login")
 			.and()
 			.authorizeRequests()
-			.anyRequest()
-			.authenticated();
+			.antMatchers(HttpMethod.GET, LOGIN_PAGE_URL).permitAll()
+			.antMatchers("/admin/**").authenticated()
+			.and()
+			.csrf().disable();
 	}
+	
+	private final String LOGIN_PAGE_URL = "/loginPage";
 }

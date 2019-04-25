@@ -1,2 +1,12 @@
+var indexObjecct = (function($) {
+	var code = "index";
+	
+    return {
+    	init: function() {
+    	}
+    };
+} (jQuery));
 
-alert("index");
+$(function() {
+	indexObjecct.init();
+});
