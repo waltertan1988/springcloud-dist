@@ -51,10 +51,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	protected void enableSecurity(HttpSecurity http) throws Exception {
-		http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+		http
+			// 自定义过滤器 - 验证码校验
+			.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
 			.formLogin()
+			// 自定义登录页面请求，可以决定返回html登录页面还是json数据
 			.loginPage(LOGIN_PAGE_DECISION_URL)
+			// 登录处理的URL
 			.loginProcessingUrl(LOGIN_URL)
+			// 认证成功/失败后的处理器
 			.successHandler(customAuthenticationSuccessHandler)
 			.failureHandler(customAuthenticationFailureHandler)
 			.and()
