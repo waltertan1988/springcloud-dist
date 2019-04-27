@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.walter.base.security.WebSecurityConfig;
-import org.walter.base.security.authenticate.ValidateCodeException;
+import org.walter.base.security.authenticate.exception.ValidateCodeException;
 
 @Component
 public class ValidateCodeFilter extends OncePerRequestFilter {

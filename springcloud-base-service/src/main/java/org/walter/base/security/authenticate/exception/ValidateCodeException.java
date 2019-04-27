@@ -1,4 +1,4 @@
-package org.walter.base.security.authenticate;
+package org.walter.base.security.authenticate.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
