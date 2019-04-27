@@ -83,3 +83,11 @@ CREATE TABLE `sys_role_resource` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK6e17ja7cin5wpidl4kmd820by` (`resource_code`,`resource_type`,`role_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- SpringSecurity的REMEMBER-ME功能表
+CREATE TABLE `persistent_logins` (
+  `username` VARCHAR(64) NOT NULL, 
+  `series` VARCHAR(64) PRIMARY KEY, 
+  `token` VARCHAR(64) NOT NULL, 
+  `last_used` TIMESTAMP NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

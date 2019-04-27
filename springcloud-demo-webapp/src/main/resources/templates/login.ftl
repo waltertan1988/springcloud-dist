@@ -16,6 +16,7 @@
 						<img id="captchaImg" src="${base}/getCaptcha" style="cursor:pointer;"/>
 					</td>
 				</tr>
+				<tr><td colspan="2">记住我：<input type="checkbox" name="remember-me"></td></tr>
 				<tr>
 					<td colspan="2">
 						<input type="submit" name="submit" value="登录">
