@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -18,7 +19,7 @@ import org.walter.base.security.authenticate.ValidateCodeException;
 @Component
 public class ValidateCodeFilter extends OncePerRequestFilter {
 
-	public final static String SESSION_KEY_CAPTCHA = ValidateCodeFilter.class.getName() + ".signcode";
+	public final static String SESSION_KEY_CAPTCHA = ValidateCodeFilter.class.getName() + "." + WebSecurityConfig.CUSTOM_SECURITY_FORM_CAPTCHA_KEY;
 	
 	@Autowired
 	private AuthenticationFailureHandler authenticationFailureHandler;
@@ -28,7 +29,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		
 		String loginUrl = request.getContextPath() + WebSecurityConfig.LOGIN_URL;
-		if(loginUrl.equals(request.getRequestURI()) && "post".equalsIgnoreCase(request.getMethod())) {
+		if(loginUrl.equals(request.getRequestURI()) && HttpMethod.POST.name().equalsIgnoreCase(request.getMethod())) {
 			try {
 				validate(request);
 			}catch(ValidateCodeException e) {
@@ -41,7 +42,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 	}
 
 	protected void validate(HttpServletRequest request) {
-		String requestCaptcha = request.getParameter("captcha");
+		String requestCaptcha = request.getParameter(WebSecurityConfig.CUSTOM_SECURITY_FORM_CAPTCHA_KEY);
 		String sessionCaptcha = (String)request.getSession().getAttribute(SESSION_KEY_CAPTCHA);
 		
 		if(StringUtils.isEmpty(requestCaptcha) || StringUtils.isEmpty(sessionCaptcha)) {

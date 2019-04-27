@@ -71,6 +71,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	private final String LOGIN_PAGE_DECISION_URL = "/loginPageDecision";
-	
 	public static final String LOGIN_URL = "/login";
+	public static final String CUSTOM_SECURITY_FORM_CAPTCHA_KEY = "captcha";
 }
