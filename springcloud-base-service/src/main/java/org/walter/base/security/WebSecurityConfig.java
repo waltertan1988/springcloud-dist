@@ -81,7 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.rememberMe()
 				// 保存RememberMe的token的方式为数据库保存
 				.tokenRepository(persistentTokenRepository())
-				.tokenValiditySeconds(3600)
+				.tokenValiditySeconds(customeSecurityProperties.getLogin().getRememberMeTokenValiditySeconds())
 				.userDetailsService(userDetailsService)
 				.and()
 			.authorizeRequests()
