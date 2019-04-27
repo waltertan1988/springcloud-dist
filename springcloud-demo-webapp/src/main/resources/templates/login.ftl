@@ -6,10 +6,23 @@
 	<body>
 		<h1>欢迎进入自定义登录页面</h1>
 		<form action="${base}/login" method="POST">
-			<label>账号：</label><input type="text" name="username" value="0009785"><br>
-			<label>密码：</label><input type="password" name="password" value="123456"><br>
-			<input type="submit" name="submit" value="登录">
-			<input type="button" id="ajaxLoginBtn" value="AJAX访问受保护页面">
+			<table>
+				<tr><td>账号：</td><td><input type="text" name="username" value="0009785"></td></tr>
+				<tr><td>密码：</td><td><input type="password" name="password" value="123456"></td></tr>
+				<tr>
+					<td>验证码：</td>
+					<td>
+						<input type="text" name="captcha">
+						<img id="captchaImg" src="${base}/getCaptcha" style="cursor:pointer;"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" name="submit" value="登录">
+						<input type="button" id="ajaxLoginBtn" value="AJAX访问受保护页面">
+					</td>
+				</tr>
+			</table>
 		</form>
 	</body>
 	

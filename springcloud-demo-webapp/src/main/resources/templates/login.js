@@ -15,6 +15,10 @@ var loginObject = (function($) {
     		        }
     		    });
     		});
+    		
+    		$("#captchaImg").click(function(){
+    			this.src = this.src + '?' + Math.random();
+    		});
     	}
     };
 } (jQuery));
