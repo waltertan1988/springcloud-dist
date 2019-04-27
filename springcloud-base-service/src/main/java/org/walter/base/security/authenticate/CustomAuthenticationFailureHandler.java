@@ -32,9 +32,11 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 			checkAndLockUser(request.getParameter("username"));
 		}
 		
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json;charset=UTF-8");
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		PrintWriter out = response.getWriter();
-		out.print(new ObjectMapper().writeValueAsString(exception));
+		out.print(new ObjectMapper().writeValueAsString(exception.getMessage()));
 		out.flush();
 	}
 

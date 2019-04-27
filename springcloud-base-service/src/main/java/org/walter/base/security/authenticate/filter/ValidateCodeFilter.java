@@ -33,6 +33,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 				validate(request);
 			}catch(ValidateCodeException e) {
 				authenticationFailureHandler.onAuthenticationFailure(request, response, e);
+				return;
 			}
 		}
 		
