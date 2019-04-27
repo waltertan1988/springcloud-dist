@@ -21,6 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
+	/**
+	 * 登录失败后的处理逻辑
+	 */
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {

@@ -17,6 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+	/**
+	 * 登录成功后的处理逻辑
+	 */
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 
