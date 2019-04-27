@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.walter.base.security.authenticate.CustomAuthenticationSuccessHandler;
 import org.walter.base.security.utils.CustomeSecurityProperties;
 
 @Configuration
@@ -20,9 +21,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private CustomeSecurityProperties customeSecurityProperties;
-	
 	@Autowired
 	private UserDetailsService userDetailsService;
+	@Autowired
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
 	// 用户认证
 	@Override
@@ -45,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.formLogin()
 			.loginPage(LOGIN_PAGE_DECISION_URL)
 			.loginProcessingUrl("/login")
+			.successHandler(customAuthenticationSuccessHandler)
 			.and()
 			.authorizeRequests()
 			.antMatchers(HttpMethod.GET, LOGIN_PAGE_DECISION_URL).permitAll()
