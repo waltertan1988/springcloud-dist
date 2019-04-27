@@ -3,7 +3,18 @@ var loginObject = (function($) {
 	
     return {
     	init: function() {
-//    		alert("login js");
+    		$("#ajaxLoginBtn").click(function(){
+    			$.ajax({
+    		        url: base + '/admin/index',            
+    		        success: function (data) {
+    		        	alert(data.body);
+    		        },
+    		        error: function (jqXHR, textStatus, errorThrown) {
+    		        	var data = JSON.parse(jqXHR.responseText);
+    		        	alert(data.errorMessage);
+    		        }
+    		    });
+    		});
     	}
     };
 } (jQuery));

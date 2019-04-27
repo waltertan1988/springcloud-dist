@@ -1,7 +1,7 @@
 package org.walter.base.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,14 +11,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.walter.base.security.utils.CustomeSecurityProperties;
 
 @Configuration
 @EnableWebSecurity
+@EnableConfigurationProperties(CustomeSecurityProperties.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	@Value("${custom.security.httpBasic.enable}")
-	private boolean isCustomSecurityHttpBasicEnable;
-
+	@Autowired
+	private CustomeSecurityProperties customeSecurityProperties;
+	
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -32,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	// 请求授权
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		if(isCustomSecurityHttpBasicEnable) {
+		if(customeSecurityProperties.getHttpBasicEnable()) {
 			enableSecurity(http);
 		}else {
 			http.httpBasic().disable();
@@ -41,15 +43,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	protected void enableSecurity(HttpSecurity http) throws Exception {
 		http.formLogin()
-			.loginPage(LOGIN_PAGE_URL)
+			.loginPage(LOGIN_PAGE_DECISION_URL)
 			.loginProcessingUrl("/login")
 			.and()
 			.authorizeRequests()
-			.antMatchers(HttpMethod.GET, LOGIN_PAGE_URL).permitAll()
+			.antMatchers(HttpMethod.GET, LOGIN_PAGE_DECISION_URL).permitAll()
 			.antMatchers("/admin/**").authenticated()
 			.and()
 			.csrf().disable();
 	}
 	
-	private final String LOGIN_PAGE_URL = "/loginPage";
+	private final String LOGIN_PAGE_DECISION_URL = "/loginPageDecision";
 }

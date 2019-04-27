@@ -24,6 +24,7 @@
 	<#if scripts?exists && scripts != ''>
 		<#list scripts?split(",") as jsItem>
 			<script id="${jsItem?trim?replace('.', '_')?replace('/', '_')}" type="text/javascript">
+			    var base = "${base}"
 				<#include "/${jsItem?trim}" parse=false />
 			</script>
 		</#list>
