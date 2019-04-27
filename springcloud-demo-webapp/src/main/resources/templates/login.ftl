@@ -4,6 +4,7 @@
 	</head>
 
 	<body>
+		<h1>欢迎进入自定义登录页面</h1>
 		<form action="${base}/login" method="POST">
 			<label>账号：</label><input type="text" name="username" value="0009785"><br>
 			<label>密码：</label><input type="password" name="password" value="123456"><br>
