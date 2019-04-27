@@ -11,8 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.walter.base.security.authenticate.CustomAuthenticationFailureHandler;
 import org.walter.base.security.authenticate.CustomAuthenticationSuccessHandler;
+import org.walter.base.security.authenticate.filter.ValidateCodeFilter;
 import org.walter.base.security.utils.CustomeSecurityProperties;
 
 @Configuration
@@ -28,6 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 	@Autowired
 	private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+	@Autowired
+	private ValidateCodeFilter validateCodeFilter;
 
 	// 用户认证
 	@Override
@@ -47,9 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	protected void enableSecurity(HttpSecurity http) throws Exception {
-		http.formLogin()
+		http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+			.formLogin()
 			.loginPage(LOGIN_PAGE_DECISION_URL)
-			.loginProcessingUrl("/login")
+			.loginProcessingUrl(LOGIN_URL)
 			.successHandler(customAuthenticationSuccessHandler)
 			.failureHandler(customAuthenticationFailureHandler)
 			.and()
@@ -61,4 +66,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	private final String LOGIN_PAGE_DECISION_URL = "/loginPageDecision";
+	
+	public static final String LOGIN_URL = "/login";
 }

@@ -22,13 +22,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.walter.base.openapi.OpenApiResponse;
+import org.walter.base.security.authenticate.filter.ValidateCodeFilter;
 
 @Controller
 public class LoginController extends BaseController {
 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
-	private final String SESSION_KEY_CAPTCHA = this.getClass().getName() + ".signcode";
 
 	@GetMapping("/loginPageDecision")
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
@@ -115,7 +114,7 @@ public class LoginController extends BaseController {
 
 		// 将四位数字的验证码保存到Session中。
 		HttpSession session = request.getSession();
-		session.setAttribute(SESSION_KEY_CAPTCHA, randomCode.toString());
+		session.setAttribute(ValidateCodeFilter.SESSION_KEY_CAPTCHA, randomCode.toString());
 
 		// 图象生效
 		g.dispose();
@@ -153,7 +152,7 @@ public class LoginController extends BaseController {
 
 	public boolean checkSignCode(HttpServletRequest request, String signcode) {
 		HttpSession session = request.getSession();
-		String signcodeSession = (String) session.getAttribute(SESSION_KEY_CAPTCHA);
+		String signcodeSession = (String) session.getAttribute(ValidateCodeFilter.SESSION_KEY_CAPTCHA);
 
 		if (StringUtils.isEmpty(signcode) || StringUtils.isEmpty(signcodeSession)) {
 			return false;
