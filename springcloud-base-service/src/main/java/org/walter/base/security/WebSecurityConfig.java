@@ -118,8 +118,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	private final String LOGIN_PAGE_DECISION_URL = "/loginPageDecision";
+	
+	/**表单认证提交的目标URL*/
 	public static final String FORM_LOGIN_URL = "/login";
+	/**手机短信验证码认证提交的目标URL*/
 	public static final String SMS_VALIDATION_CODE_LOGIN_URL = "/sms/login";
+	
+	/**图片验证码在表单中的name*/
 	public static final String CUSTOM_SECURITY_FORM_CAPTCHA_KEY = "captcha";
+	/**手机短信验证码在表单中的name*/
 	public static final String CUSTOM_SECURITY_SMA_VALIDATION_CODE_KEY = "sms-validation-code";
 }
