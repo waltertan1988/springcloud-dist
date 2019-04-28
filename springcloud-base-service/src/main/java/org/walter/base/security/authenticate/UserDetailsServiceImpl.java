@@ -24,19 +24,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private SysUserRoleRepository sysUserRoleRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String usernameOrMobile) throws UsernameNotFoundException {
 		
-		JpaSysUser sysUser = sysUserRepository.findByUsername(username);
+		JpaSysUser sysUser = sysUserRepository.findByUsernameOrMobile(usernameOrMobile);
 		if(sysUser == null){
-			throw new UsernameNotFoundException(String.format("用户名%s不存在", username));
+			throw new UsernameNotFoundException(String.format("用户名或手机号%s不存在", usernameOrMobile));
 		}
 		
 		Set<GrantedAuthority> authoritySet = new HashSet<GrantedAuthority>();
-		for(JpaSysUserRole jpaSysUserRole : sysUserRoleRepository.findByUsername(username)) {
+		for(JpaSysUserRole jpaSysUserRole : sysUserRoleRepository.findByUsername(sysUser.getUsername())) {
 			authoritySet.add(new SimpleGrantedAuthority(jpaSysUserRole.getRoleCode()));
 		}
 //		AuthorityUtils
-		UserDetails userDetails = new User(username, sysUser.getPassword(), sysUser.isEnabled(), !sysUser.isExpired(), !sysUser.isPasswordExpired(), !sysUser.isLocked(), authoritySet);
+		UserDetails userDetails = new User(sysUser.getUsername(), sysUser.getPassword(), sysUser.isEnabled(), !sysUser.isExpired(), !sysUser.isPasswordExpired(), !sysUser.isLocked(), authoritySet);
 		
 		return userDetails;
 	}

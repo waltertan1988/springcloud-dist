@@ -29,7 +29,7 @@ public class UserApiController extends BaseUserApiController implements UserApi{
 	@Override
 	public JpaSysUser getUser(@PathVariable("username")String username) {
 		log.info("");
-		JpaSysUser user = sysUserRepository.findByUsername(username);
+		JpaSysUser user = sysUserRepository.findByUsernameOrMobile(username);
 		resApiFeign.listMenu(username);
 		
 		return user;

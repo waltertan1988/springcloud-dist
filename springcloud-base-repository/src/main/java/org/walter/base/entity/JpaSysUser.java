@@ -22,6 +22,9 @@ public class JpaSysUser extends AbstractAuditable {
 	@Column(length = 1, nullable = false, name = "GENDER")
 	private String gender;
 	
+	@Column(length = 11, nullable = true, name = "MOBILE")
+	private String mobile;
+	
 	@Column(name = "IS_EXPIRED", nullable = false)
 	private boolean isExpired;
 	
@@ -96,5 +99,13 @@ public class JpaSysUser extends AbstractAuditable {
 
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 }

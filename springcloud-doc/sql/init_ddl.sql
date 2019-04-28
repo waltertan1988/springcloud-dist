@@ -12,21 +12,23 @@ CREATE TABLE `sys_role` (
 
 CREATE TABLE `sys_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8_bin NOT NULL,
+  `password` varchar(255) COLLATE utf8_bin NOT NULL,
+  `user_real_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `mobile` varchar(11) COLLATE utf8_bin DEFAULT NULL,
+  `gender` varchar(1) COLLATE utf8_bin NOT NULL,,
   `created_by` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `last_modified_by` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `last_modified_date` datetime DEFAULT NULL,
-  `gender` varchar(1) COLLATE utf8_bin NOT NULL,
-  `password` varchar(255) COLLATE utf8_bin NOT NULL,
-  `user_real_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `username` varchar(255) COLLATE utf8_bin NOT NULL,
   `is_expired` bit(1) NOT NULL,
   `is_locked` bit(1) NOT NULL,
   `is_password_expired` bit(1) NOT NULL,
   `is_enabled` bit(1) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_51bvuyvihefoh4kp5syh2jpi4` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  UNIQUE KEY `UK_51bvuyvihefoh4kp5syh2jpi4` (`username`),
+  UNIQUE KEY `UK_51bvuyvihefoh4kp5syh2jpi5` (`mobile`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `sys_user_role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
