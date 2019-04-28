@@ -60,6 +60,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return jdbcTokenRepositoryImpl;
 	}
 	
+	/***
+	   *  构造自定义手机短信验证码的认证过滤器
+	 * @param http
+	 * @return
+	 * @throws Exception
+	 */
 	protected SmsValidationCodeAuthenticationFilter buildSmsValidationCodeAuthenticationFilter(HttpSecurity http) throws Exception {
 		SmsValidationCodeAuthenticationFilter filter = new SmsValidationCodeAuthenticationFilter();
 		filter.setAuthenticationManager(authenticationManagerBean());
