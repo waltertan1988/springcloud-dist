@@ -11,4 +11,6 @@ public interface SysActionRepository extends JpaRepository<JpaSysAction, Long>{
 	public List<JpaSysAction> findByActionCodeIn(Collection<String> actionCodes);
 	
 	public JpaSysAction findByActionCode(String actionCode);
+	
+	public List<JpaSysAction> findByIsGroup(boolean isGroup);
 }

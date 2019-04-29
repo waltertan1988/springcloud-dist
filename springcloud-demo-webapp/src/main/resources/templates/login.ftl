@@ -35,7 +35,7 @@
 					<td>验证码：</td>
 					<td>
 						<input type="text" name="sms-validation-code">
-						<a href="${base}/sms/getValidationCode/13123456789">获取短信验证码</a>
+						<a href="${base}/sms/getValidationCode/13123456789" target="_blank">获取短信验证码</a>
 					</td>
 				</tr>
 				<tr>

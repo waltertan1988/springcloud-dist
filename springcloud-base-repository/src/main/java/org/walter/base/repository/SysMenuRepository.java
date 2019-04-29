@@ -9,4 +9,6 @@ import org.walter.base.entity.JpaSysMenu;
 public interface SysMenuRepository extends JpaRepository<JpaSysMenu, Long>{
 
 	public List<JpaSysMenu> findByMenuCodeIn(Collection<String> menuCodes);
+	
+	public List<JpaSysMenu> findByIsGroup(boolean isGroup);
 }
