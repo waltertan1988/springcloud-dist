@@ -6,8 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.walter.base.entity.enumeration.SysResourceTypeEnum;
-import org.walter.base.entity.enumeration.converter.SysResourceTypeEnumConverter;
+import org.walter.base.entity.enumeration.converter.JpaSysRoleResourceResourceTypeEnumConverter;
 
 @Entity
 @Table(name = "SYS_ROLE_RESOURCE", uniqueConstraints = {
@@ -20,8 +19,8 @@ public class JpaSysRoleResource extends AbstractAuditable {
 	private String resourceCode;
 
 	@Column(name = "RESOURCE_TYPE", length = 255, nullable = false)
-	@Convert(converter=SysResourceTypeEnumConverter.class)
-	private SysResourceTypeEnum resourceType;
+	@Convert(converter=JpaSysRoleResourceResourceTypeEnumConverter.class)
+	private ResourceTypeEnum resourceTypeEnum;
 
 	@Column(name = "ROLE_CODE", length = 255, nullable = false)
 	private String roleCode;
@@ -34,12 +33,12 @@ public class JpaSysRoleResource extends AbstractAuditable {
 		this.resourceCode = resourceCode;
 	}
 
-	public SysResourceTypeEnum getResourceType() {
-		return resourceType;
+	public ResourceTypeEnum getResourceTypeEnum() {
+		return resourceTypeEnum;
 	}
 
-	public void setResourceType(SysResourceTypeEnum resourceType) {
-		this.resourceType = resourceType;
+	public void setResourceTypeEnum(ResourceTypeEnum resourceType) {
+		this.resourceTypeEnum = resourceType;
 	}
 
 	public String getRoleCode() {
@@ -48,5 +47,25 @@ public class JpaSysRoleResource extends AbstractAuditable {
 
 	public void setRoleCode(String roleCode) {
 		this.roleCode = roleCode;
+	}
+	
+	public enum ResourceTypeEnum {
+		MENU("MENU"),
+		ACTION("ACTION");
+		
+		private String code;
+		
+		ResourceTypeEnum(String code){
+			this.code = code;
+		}
+		
+		public String getCode() {
+			return code;
+		}
+
+		@Override
+		public String toString() {
+			return code;
+		}
 	}
 }

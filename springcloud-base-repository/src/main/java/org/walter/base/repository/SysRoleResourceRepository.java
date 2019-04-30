@@ -5,4 +5,5 @@ import org.walter.base.entity.JpaSysRoleResource;
 
 public interface SysRoleResourceRepository extends JpaRepository<JpaSysRoleResource, Long>{
 
+	public JpaSysRoleResource getByResourceCodeAndResourceTypeEnumAndRoleCode(String resourceCode, JpaSysRoleResource.ResourceTypeEnum resourceTypeEnum, String roleCode);
 }

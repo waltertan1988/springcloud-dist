@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.AuthenticatedVoter;
 import org.springframework.security.access.vote.RoleVoter;
@@ -30,9 +29,6 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.walter.base.repository.SysActionRepository;
-import org.walter.base.repository.SysMenuRepository;
-import org.walter.base.repository.SysRoleResourceRepository;
 import org.walter.base.security.authenticate.CustomAuthenticationFailureHandler;
 import org.walter.base.security.authenticate.CustomAuthenticationSuccessHandler;
 import org.walter.base.security.authenticate.filter.CaptchaValidationCodeFilter;
@@ -63,11 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private SmsValidationCodeAuthenticationProvider smsValidationCodeAuthenticationProvider;
 	@Autowired
-	private SysMenuRepository sysMenuRepository;
-	@Autowired
-	private SysActionRepository sysActionRepository;
-	@Autowired
-	private SysRoleResourceRepository sysRoleResourceRepository;
+	private CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
 
 	@Bean
 	@Override
@@ -80,11 +72,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl = new JdbcTokenRepositoryImpl();
 		jdbcTokenRepositoryImpl.setDataSource(dataSource);
 		return jdbcTokenRepositoryImpl;
-	}
-	
-	@Bean
-	public CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource(SecurityMetadataSource securityMetadataSource) {
-		return new CustomFilterInvocationSecurityMetadataSource(securityMetadataSource, sysMenuRepository, sysActionRepository,sysRoleResourceRepository);
 	}
 	
 	@Bean
@@ -159,7 +146,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					@Override
 					public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
 						// 自定义SecurityMetadataSource
-						fsi.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource(fsi.getSecurityMetadataSource()));
+						customFilterInvocationSecurityMetadataSource.setSecurityMetadataSource(fsi.getSecurityMetadataSource());
+						customFilterInvocationSecurityMetadataSource.setupSecurityMetadataSource();
+						fsi.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource);
 						
 						// 自定义AccessDecisionManager并添加RoleVoter
 						fsi.setAccessDecisionManager(accessDecisionManager());
