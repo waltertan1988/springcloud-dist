@@ -12,9 +12,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.AuthenticatedVoter;
-import org.springframework.security.access.vote.RoleVoter;
+import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,6 +31,8 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.walter.base.entity.JpaSysRole;
+import org.walter.base.repository.SysRoleRepository;
 import org.walter.base.security.authenticate.CustomAuthenticationFailureHandler;
 import org.walter.base.security.authenticate.CustomAuthenticationSuccessHandler;
 import org.walter.base.security.authenticate.filter.CaptchaValidationCodeFilter;
@@ -44,6 +48,8 @@ import org.walter.base.security.utils.CustomeSecurityProperties;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
+	@Autowired
+	private SysRoleRepository sysRoleRepository;
 	@Autowired
 	private CustomeSecurityProperties customeSecurityProperties;
 	@Autowired
@@ -78,10 +84,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AccessDecisionManager accessDecisionManager() {
         List<AccessDecisionVoter<? extends Object>> decisionVoters = Arrays.asList(
             new WebExpressionVoter(),
-            new RoleVoter(),
+            //添加层次角色投票者
+            new RoleHierarchyVoter(roleHierarchy()),
             new AuthenticatedVoter());
         return new AffirmativeBased(decisionVoters);
     }
+	
+	@Bean
+	public RoleHierarchy roleHierarchy(){
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        roleHierarchy.setHierarchy(getRoleHierarchyString());
+        return roleHierarchy;
+    }
+	
+	private String getRoleHierarchyString() {
+		StringBuffer roleHierarchy = new StringBuffer();
+		for(JpaSysRole jpaSysRole : sysRoleRepository.findByParentRoleCodeNotNull()) {
+			roleHierarchy.append(jpaSysRole.getRoleCode())
+			.append(">")
+			.append(jpaSysRole.getParentRoleCode())
+			.append("\n");
+		}
+		return roleHierarchy.toString();
+	}
 
 	/***
 	 * 构造自定义手机短信验证码的认证过滤器

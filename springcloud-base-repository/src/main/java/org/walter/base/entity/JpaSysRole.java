@@ -15,6 +15,9 @@ public class JpaSysRole extends AbstractAuditable {
 	
 	@Column(name="ROLE_NAME", length=255)
 	private String roleName;
+	
+	@Column(name="PARENT_ROLE_CODE", length=255)
+	private String parentRoleCode;
 
 	public String getRoleCode() {
 		return roleCode;
@@ -30,5 +33,13 @@ public class JpaSysRole extends AbstractAuditable {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public String getParentRoleCode() {
+		return parentRoleCode;
+	}
+
+	public void setParentRoleCode(String parentRoleCode) {
+		this.parentRoleCode = parentRoleCode;
 	}
 }
