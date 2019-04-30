@@ -13,3 +13,33 @@ spring:
       number_format: '#.##'
       template_update_delay: 0
     template-loader-path: classpath:templates/
+  
+  # spring cloud stream rabbitmq
+  cloud:
+    stream:
+      binders:
+        rabbitmq1:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: centos7-master
+                port: 5672
+                username: walter
+                password: 123456
+                virtual-host: /
+      bindings:
+        refreshStaticMemoryDataInput:
+          destination: REFRESH_STATIC_MEMORY_DATA
+          binder: rabbitmq1
+          #group: demo-webapp
+        refreshStaticMemoryDataOutput:
+          destination: REFRESH_STATIC_MEMORY_DATA
+          binder: rabbitmq1
+        refreshRoleResourceInput:
+          destination: REFRESH_ROLE_RESOURCE
+          binder: rabbitmq1
+          #group: demo-webapp
+        refreshRoleResourceOutout:
+          destination: REFRESH_ROLE_RESOURCE
+          binder: rabbitmq1

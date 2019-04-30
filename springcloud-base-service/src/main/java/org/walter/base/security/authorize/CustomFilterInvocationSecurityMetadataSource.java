@@ -98,6 +98,11 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 		}
 	}
 	
+	/**
+	 * 根据接收的消息类型，刷新资源角色配置
+	 * @param jsonStrMsg
+	 * @throws IOException
+	 */
 	@StreamListener(RefreshRoleResourceSink.INPUT)
 	@Transactional
 	public void consumerMessage(String jsonStrMsg) throws IOException {
