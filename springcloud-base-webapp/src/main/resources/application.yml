@@ -1,0 +1,15 @@
+spring:
+  # Freemarker
+  freemarker:
+    charset: UTF-8
+    enabled: true
+    prefer-file-system-access: false
+    settings:
+      auto_import: '"/spring.ftl" as spring, "/layout.ftl" as layout'
+      date_format: yyyy-MM-dd
+      datetime_format: yyyy-MM-dd
+      default_encoding: UTF-8
+      locale: zh_CN
+      number_format: '#.##'
+      template_update_delay: 0
+    template-loader-path: classpath:templates/
