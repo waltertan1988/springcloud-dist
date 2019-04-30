@@ -113,7 +113,9 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 		
 		if(RefreshRoleResourceMessage.OperationType.DELETE.equals(refreshRoleResourceMessage.getOperationType())) {
 			JpaSysRoleResource jpaSysRoleResource = sysRoleResourceRepository.getByResourceCodeAndResourceTypeEnumAndRoleCode(resourceCode, resourceType, roleCode);
-			sysRoleResourceRepository.delete(jpaSysRoleResource);
+			if(null != jpaSysRoleResource) {
+				sysRoleResourceRepository.delete(jpaSysRoleResource);
+			}
 		}else if(RefreshRoleResourceMessage.OperationType.INSERT.equals(refreshRoleResourceMessage.getOperationType())) {
 			JpaSysRoleResource jpaSysRoleResource = new JpaSysRoleResource();
 			jpaSysRoleResource.setResourceCode(resourceCode);
