@@ -32,7 +32,6 @@ spring:
         refreshStaticMemoryDataInput:
           destination: REFRESH_STATIC_MEMORY_DATA
           binder: rabbitmq1
-          #group: demo-webapp
         refreshStaticMemoryDataOutput:
           destination: REFRESH_STATIC_MEMORY_DATA
           binder: rabbitmq1
@@ -40,6 +39,12 @@ spring:
           destination: REFRESH_ROLE_RESOURCE
           binder: rabbitmq1
           #group: demo-webapp
-        refreshRoleResourceOutout:
+        refreshRoleResourceOutput:
           destination: REFRESH_ROLE_RESOURCE
+          binder: rabbitmq1
+        refreshRoleInput:
+          destination: REFRESH_ROLE
+          binder: rabbitmq1
+        refreshRoleOutput:
+          destination: REFRESH_ROLE
           binder: rabbitmq1

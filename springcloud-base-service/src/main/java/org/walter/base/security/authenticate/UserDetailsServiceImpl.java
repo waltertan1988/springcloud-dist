@@ -6,7 +6,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,8 +35,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			authoritySet.add(new SimpleGrantedAuthority(jpaSysUserRole.getRoleCode()));
 		}
 //		AuthorityUtils
-		UserDetails userDetails = new User(sysUser.getUsername(), sysUser.getPassword(), sysUser.isEnabled(), !sysUser.isExpired(), !sysUser.isPasswordExpired(), !sysUser.isLocked(), authoritySet);
+		CustomUser customUser = new CustomUser(sysUser.getUsername(), sysUser.getPassword(), sysUser.isEnabled(), !sysUser.isExpired(), !sysUser.isPasswordExpired(), !sysUser.isLocked(), authoritySet);
+		customUser.setUserRealName(sysUser.getUserRealName());
+		customUser.setGender(sysUser.getGender());
+		customUser.setMobile(sysUser.getMobile());
 		
-		return userDetails;
+		return customUser;
 	}
 }

@@ -21,6 +21,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.walter.base.admin.controller.BaseController;
 import org.walter.base.openapi.OpenApiResponse;
 import org.walter.base.security.authenticate.filter.CaptchaValidationCodeFilter;
 

@@ -1,3 +1,3 @@
 <@layout.admin title="Index" scripts="/index.js">
-	Hello, base=${base!"null"}
+	Hello
 </@layout.admin>

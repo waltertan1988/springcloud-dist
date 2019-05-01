@@ -5,7 +5,7 @@ var loginObject = (function($) {
     	init: function() {
     		$("#ajaxLoginBtn").click(function(){
     			$.ajax({
-    		        url: base + '/admin/index',            
+    		        url: BASE + '/admin/index',            
     		        success: function (data) {
     		        	alert(data.body);
     		        },

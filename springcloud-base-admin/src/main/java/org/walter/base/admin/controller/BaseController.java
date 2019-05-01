@@ -1,4 +1,4 @@
-package org.walter.base.webapp.controller;
+package org.walter.base.admin.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

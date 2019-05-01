@@ -1,4 +1,4 @@
-package org.walter.base.webapp.controller;
+package org.walter.base.admin.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public abstract class BaseAdminController extends BaseController {
 
 	protected String getRelativePath(String path) {
+		
 		String prefix = this.getClass().getSuperclass().getAnnotation(RequestMapping.class).value()[0];
 		
 		if(path.matches("^" + prefix + "/[.]+")) {

@@ -23,7 +23,7 @@ import org.walter.base.entity.JpaSysRoleResource;
 import org.walter.base.repository.SysActionRepository;
 import org.walter.base.repository.SysMenuRepository;
 import org.walter.base.repository.SysRoleResourceRepository;
-import org.walter.base.security.authorize.messaging.binding.RefreshRoleResourceSink;
+import org.walter.base.security.authorize.messaging.binding.RefreshRoleResourceProcessor;
 import org.walter.base.security.authorize.messaging.message.RefreshRoleResourceMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
    * 自定义SecurityMetadataSource，可用于为资源动态授权
  * @author ThinkPad
  */
-@EnableBinding({RefreshRoleResourceSink.class})
+@EnableBinding({RefreshRoleResourceProcessor.class})
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 	
 	private Map<String, String> URL_ROLE_MAPPING = new HashMap<>();
@@ -103,7 +103,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 	 * @param jsonStrMsg
 	 * @throws IOException
 	 */
-	@StreamListener(RefreshRoleResourceSink.INPUT)
+	@StreamListener(RefreshRoleResourceProcessor.INPUT)
 	@Transactional
 	public void consumerMessage(String jsonStrMsg) throws IOException {
 		RefreshRoleResourceMessage refreshRoleResourceMessage = new ObjectMapper().readValue(jsonStrMsg, RefreshRoleResourceMessage.class);

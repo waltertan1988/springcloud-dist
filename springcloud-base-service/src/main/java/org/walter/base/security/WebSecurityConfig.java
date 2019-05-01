@@ -31,8 +31,6 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.walter.base.entity.JpaSysRole;
-import org.walter.base.repository.SysRoleRepository;
 import org.walter.base.security.authenticate.CustomAuthenticationFailureHandler;
 import org.walter.base.security.authenticate.CustomAuthenticationSuccessHandler;
 import org.walter.base.security.authenticate.filter.CaptchaValidationCodeFilter;
@@ -41,6 +39,7 @@ import org.walter.base.security.authenticate.filter.SmsValidationCodeFilter;
 import org.walter.base.security.authenticate.provider.SmsValidationCodeAuthenticationProvider;
 import org.walter.base.security.authorize.CustomFilterInvocationSecurityMetadataSource;
 import org.walter.base.security.utils.CustomeSecurityProperties;
+import org.walter.base.service.RoleHierarchyService;
 
 @Configuration
 @EnableWebSecurity
@@ -48,8 +47,6 @@ import org.walter.base.security.utils.CustomeSecurityProperties;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
-	@Autowired
-	private SysRoleRepository sysRoleRepository;
 	@Autowired
 	private CustomeSecurityProperties customeSecurityProperties;
 	@Autowired
@@ -67,6 +64,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
 
+	@Autowired
+	private RoleHierarchyService roleHierarchyService;
+	
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -93,20 +93,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public RoleHierarchy roleHierarchy(){
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy(getRoleHierarchyString());
+        roleHierarchy.setHierarchy(roleHierarchyService.getRoleHierarchyString());
         return roleHierarchy;
     }
-	
-	private String getRoleHierarchyString() {
-		StringBuffer roleHierarchy = new StringBuffer();
-		for(JpaSysRole jpaSysRole : sysRoleRepository.findByParentRoleCodeNotNull()) {
-			roleHierarchy.append(jpaSysRole.getRoleCode())
-			.append(">")
-			.append(jpaSysRole.getParentRoleCode())
-			.append("\n");
-		}
-		return roleHierarchy.toString();
-	}
 
 	/***
 	 * 构造自定义手机短信验证码的认证过滤器
