@@ -1,4 +1,4 @@
-package org.walter.base.service.impl;
+package org.walter.base.security.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -9,8 +9,8 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.walter.base.security.authorize.messaging.binding.RefreshRoleProcessor;
-import org.walter.base.service.RoleHierarchyService;
-import org.walter.base.service.RoleService;
+import org.walter.base.security.service.RoleHierarchyService;
+import org.walter.base.security.service.RoleService;
 
 @EnableBinding({RefreshRoleProcessor.class})
 public class RoleServiceImpl implements RoleService {

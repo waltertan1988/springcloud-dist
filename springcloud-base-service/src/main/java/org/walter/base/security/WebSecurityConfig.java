@@ -38,8 +38,8 @@ import org.walter.base.security.authenticate.filter.SmsValidationCodeAuthenticat
 import org.walter.base.security.authenticate.filter.SmsValidationCodeFilter;
 import org.walter.base.security.authenticate.provider.SmsValidationCodeAuthenticationProvider;
 import org.walter.base.security.authorize.CustomFilterInvocationSecurityMetadataSource;
+import org.walter.base.security.service.RoleHierarchyService;
 import org.walter.base.security.utils.CustomeSecurityProperties;
-import org.walter.base.service.RoleHierarchyService;
 
 @Configuration
 @EnableWebSecurity

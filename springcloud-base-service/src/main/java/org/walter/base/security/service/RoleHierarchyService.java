@@ -1,4 +1,4 @@
-package org.walter.base.service;
+package org.walter.base.security.service;
 
 public interface RoleHierarchyService {
 

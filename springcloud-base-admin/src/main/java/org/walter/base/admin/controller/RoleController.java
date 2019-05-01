@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.walter.base.openapi.OpenApi;
-import org.walter.base.service.RoleService;
+import org.walter.base.security.service.RoleService;
 
 @Controller
 public class RoleController extends BaseAdminController {

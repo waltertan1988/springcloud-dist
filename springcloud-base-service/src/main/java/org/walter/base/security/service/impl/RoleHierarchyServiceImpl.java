@@ -1,10 +1,10 @@
-package org.walter.base.service.impl;
+package org.walter.base.security.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.walter.base.entity.JpaSysRole;
 import org.walter.base.repository.SysRoleRepository;
-import org.walter.base.service.RoleHierarchyService;
+import org.walter.base.security.service.RoleHierarchyService;
 
 @Service
 public class RoleHierarchyServiceImpl implements RoleHierarchyService {
