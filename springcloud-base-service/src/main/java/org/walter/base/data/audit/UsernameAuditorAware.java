@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+import org.walter.base.security.authenticate.CustomUser;
 
 @Component
 public class UsernameAuditorAware implements AuditorAware<String> {
@@ -21,7 +21,7 @@ public class UsernameAuditorAware implements AuditorAware<String> {
 	      return Optional.of(DEFAULT_USER_NAME);
 	    }
 
-	    String username = ((User) authentication.getPrincipal()).getUsername();
+	    String username = ((CustomUser) authentication.getPrincipal()).getUsername();
 	    return Optional.ofNullable(username);
 	}
 }
