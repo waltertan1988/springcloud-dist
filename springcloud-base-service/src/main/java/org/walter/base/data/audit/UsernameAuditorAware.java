@@ -11,14 +11,14 @@ import org.walter.base.security.authenticate.CustomUser;
 @Component
 public class UsernameAuditorAware implements AuditorAware<String> {
 	
-	public static final String DEFAULT_USER_NAME = "*ADMIN";
+	public static final String ANONYMOUS_USER_NAME = "*ANONYMOUS";
 	
 	@Override
 	public Optional<String> getCurrentAuditor() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 	    if (authentication == null || !authentication.isAuthenticated()) {
-	      return Optional.of(DEFAULT_USER_NAME);
+	      return Optional.of(ANONYMOUS_USER_NAME);
 	    }
 
 	    String username = ((CustomUser) authentication.getPrincipal()).getUsername();
