@@ -2,13 +2,13 @@
 eureka:
   client:
     fetch-registry: true
-    register-with-eureka: false
+    register-with-eureka: true
     service-url:
       defaultZone: http://localhost:7110/eureka/
 
 spring:
   application:
-    name: productCenter
+    name: product-center
   # 使用springcloud config配置中心
   cloud:
     config:
