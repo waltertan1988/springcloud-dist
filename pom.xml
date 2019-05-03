@@ -25,6 +25,8 @@
 		
 		<module>springcloud-doc</module>
 		
+		<module>springcloud-website</module>
+		
 		<module>springcloud-base-parent</module>
 		<module>springcloud-base-repository</module>
 		<module>springcloud-base-service</module>
