@@ -42,5 +42,7 @@
 		<module>springcloud-api-user-impl</module>
 		<module>springcloud-api-res</module>
 		<module>springcloud-api-res-impl</module>
+		
+		<module>springcloud-product-controller</module>
 	</modules>
 </project>
