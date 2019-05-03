@@ -19,6 +19,7 @@
 
 		<module>springcloud-tool-eureka</module>
 		<module>springcloud-tool-hystrix-dashboard</module>
+		<module>springcloud-tool-zuul</module>
 		<module>springcloud-tool-gateway</module>
 		<module>springcloud-tool-config</module>
 		
@@ -35,8 +36,6 @@
 		<module>springcloud-demo-service</module>
 		<module>springcloud-demo-admin</module>
 		<module>springcloud-demo-webapp</module>
-		
-		<module>springcloud-demo-zuul</module>
 		
 		<module>springcloud-api-parent</module>
 		<module>springcloud-api-user</module>
