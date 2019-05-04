@@ -1,5 +1,5 @@
-var indexObject = (function($) {
-	var code = "index";
+var loginObject = (function($) {
+	var code = "login";
 	
     return {
 		init: function() {
@@ -15,5 +15,5 @@ var indexObject = (function($) {
 } (jQuery));
 
 $(function() {
-	indexObject.init();
+	loginObject.init();
 });
