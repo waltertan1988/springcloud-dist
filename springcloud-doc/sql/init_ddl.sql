@@ -1,4 +1,4 @@
-CREATE TABLE `sys_role` (
+CREATE TABLE `acl_role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_code` varchar(255) COLLATE utf8_bin NOT NULL,
   `role_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE `sys_role` (
   UNIQUE KEY `UK_jqdita2l45v2gglry7bp8kl1f` (`role_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-CREATE TABLE `sys_user` (
+CREATE TABLE `acl_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) COLLATE utf8_bin NOT NULL,
   `password` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `sys_user` (
   UNIQUE KEY `UK_51bvuyvihefoh4kp5syh2jpi5` (`mobile`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-CREATE TABLE `sys_user_role` (
+CREATE TABLE `acl_user_role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_code` varchar(255) COLLATE utf8_bin NOT NULL,
   `username` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `sys_user_role` (
   UNIQUE KEY `UKdpcww1t3hhjsuxisdjygqps40` (`username`,`role_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-CREATE TABLE `sys_action` (
+CREATE TABLE `acl_action` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `action_code` varchar(255) COLLATE utf8_bin NOT NULL,
   `action_name` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE `sys_action` (
   UNIQUE KEY `UK_38i63eoapprflv3esjdf9036d` (`action_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-CREATE TABLE `sys_menu` (
+CREATE TABLE `acl_menu` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `is_group` bit(1) NOT NULL,
   `menu_code` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `sys_menu` (
   UNIQUE KEY `UK_b679yhxaq3tpo2ri78i4tndgl` (`menu_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-CREATE TABLE `sys_role_resource` (
+CREATE TABLE `acl_role_resource` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `resource_code` varchar(255) COLLATE utf8_bin NOT NULL,
   `resource_type` varchar(255) COLLATE utf8_bin NOT NULL,
