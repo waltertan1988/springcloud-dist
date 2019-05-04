@@ -8,22 +8,16 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../springcloud-base-parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>springcloud-auth-service</artifactId>
+	<artifactId>springcloud-product-service</artifactId>
 	<packaging>jar</packaging>
 
-	<name>springcloud-auth-service</name>
+	<name>springcloud-product-service</name>
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
         <dependency>
 			<groupId>com.walter</groupId>
 			<artifactId>springcloud-base-service</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.walter</groupId>
-			<artifactId>springcloud-auth-repository</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

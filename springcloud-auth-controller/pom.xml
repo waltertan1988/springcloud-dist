@@ -5,9 +5,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.walter</groupId>
-		<artifactId>springcloud-demo-parent</artifactId>
+		<artifactId>springcloud-base-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../springcloud-demo-parent/pom.xml</relativePath>
+		<relativePath>../springcloud-base-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>springcloud-auth-controller</artifactId>
 	<packaging>jar</packaging>
@@ -17,45 +17,14 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>false</optional>
+		    <groupId>com.walter</groupId>
+		    <artifactId>springcloud-base-controller</artifactId>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zipkin</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-		
+	
 		<dependency>
 		    <groupId>com.walter</groupId>
 		    <artifactId>springcloud-auth-service</artifactId>
+		    <version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
