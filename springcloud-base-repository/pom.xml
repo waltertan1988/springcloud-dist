@@ -8,10 +8,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../springcloud-parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>springcloud-base-repository</artifactId>
+	<artifactId>springcloud-base-repositoryX</artifactId>
 	<packaging>jar</packaging>
 
-	<name>springcloud-base-repository</name>
+	<name>springcloud-base-repositoryX</name>
 	<url>http://maven.apache.org</url>
 
 	<dependencies>

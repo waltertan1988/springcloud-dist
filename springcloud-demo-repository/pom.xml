@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.walter</groupId>
-			<artifactId>springcloud-base-repository</artifactId>
+			<artifactId>springcloud-base-repositoryX</artifactId>
 		</dependency>
 		
 		<dependency>
