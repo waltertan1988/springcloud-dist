@@ -1,4 +1,4 @@
-package com.walter.auth.security;
+package com.walter.base.security.authenticate;
 
 import java.util.Collection;
 

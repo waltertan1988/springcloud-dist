@@ -1,4 +1,4 @@
-package com.walter.auth.security.authenticate;
+package com.walter.base.security.authenticate;
 
 import java.io.IOException;
 import java.io.PrintWriter;

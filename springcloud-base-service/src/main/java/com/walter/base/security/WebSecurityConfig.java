@@ -1,4 +1,4 @@
-package com.walter.auth;
+package com.walter.base.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.walter.auth.security.authenticate.CustomAuthenticationFailureHandler;
-import com.walter.auth.security.authenticate.CustomAuthenticationSuccessHandler;
-import com.walter.auth.security.props.CustomeSecurityProperties;
+import com.walter.base.security.authenticate.CustomAuthenticationFailureHandler;
+import com.walter.base.security.authenticate.CustomAuthenticationSuccessHandler;
+import com.walter.base.security.props.CustomeSecurityProperties;
 
 @Configuration
 @EnableWebSecurity

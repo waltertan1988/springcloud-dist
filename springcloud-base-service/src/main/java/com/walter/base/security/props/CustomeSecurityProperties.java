@@ -1,4 +1,4 @@
-package com.walter.auth.security.props;
+package com.walter.base.security.props;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

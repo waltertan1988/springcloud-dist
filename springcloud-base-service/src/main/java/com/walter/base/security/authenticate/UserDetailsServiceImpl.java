@@ -1,4 +1,4 @@
-package com.walter.auth.security.authenticate;
+package com.walter.base.security.authenticate;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +15,6 @@ import com.walter.auth.entity.JpaAclUser;
 import com.walter.auth.entity.JpaAclUserRole;
 import com.walter.auth.repository.AclUserRepository;
 import com.walter.auth.repository.AclUserRoleRepository;
-import com.walter.auth.security.CustomUser;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
