@@ -55,7 +55,7 @@ public class LoginFilter extends ZuulFilter {
 		String jwtTokenValue = request.getHeader(JWT_HEADER);
 		
 		//检查Jwt是否存在或过期
-		if(StringUtils.isEmpty(jwtTokenValue) || null == getClaimsFromToken(jwtTokenValue)) {
+		if(StringUtils.isEmpty(jwtTokenValue) || null == getClaimsFromJwt(jwtTokenValue)) {
 			requestContext.setSendZuulResponse(false);//设置不放行
 			requestContext.setResponseStatusCode(HttpStatus.SC_FORBIDDEN);//返回403响应码
 		}
@@ -83,7 +83,7 @@ public class LoginFilter extends ZuulFilter {
 	 * @param jwt
 	 * @return
 	 */
-	protected Claims getClaimsFromToken(String jwt) {
+	protected Claims getClaimsFromJwt(String jwt) {
 	    Claims claims;
 	    try {
 	        claims = Jwts.parser()
