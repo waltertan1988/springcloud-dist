@@ -11,7 +11,7 @@ var productObject = (function($) {
 		        headers: ajaxHeader,
 		        error: function(xmlHttpRequest, textStatus, errorThrown){
 		        	if("403" == xmlHttpRequest.status){
-		        		// 客户端保存当前页面的URL
+		        		// 客户端保存当前页面的URL到SessionStorage并跳转到登录页面
 			        	sessionStorage[_GOLBAL_CONSTANT.SESSION_STORAGE_KEY.LOGIN_CACHED_URL] = window.location.href;
 			        	window.location.href = _GOLBAL_CONSTANT.FORM_LOGIN.LOGIN_PAGE;
 		        	}else{
