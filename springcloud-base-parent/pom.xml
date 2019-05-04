@@ -65,7 +65,22 @@
 			</dependency>
 			<dependency>
 				<groupId>com.walter</groupId>
+				<artifactId>springcloud-base-controller</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.walter</groupId>
+				<artifactId>springcloud-base-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.walter</groupId>
 				<artifactId>springcloud-base-serviceX</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.walter</groupId>
+				<artifactId>springcloud-base-repository</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

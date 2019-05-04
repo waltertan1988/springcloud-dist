@@ -28,9 +28,12 @@
 		<module>springcloud-website</module>
 		
 		<module>springcloud-base-parent</module>
+		<module>springcloud-base-repository</module>
 		<module>springcloud-base-repositoryX</module>
+		<module>springcloud-base-service</module>
 		<module>springcloud-base-serviceX</module>
 		<module>springcloud-base-admin</module>
+		<module>springcloud-base-controller</module>
 		<module>springcloud-base-webapp</module>
 		
 		<module>springcloud-demo-parent</module>
