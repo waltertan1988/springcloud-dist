@@ -2,6 +2,7 @@ package com.walter.zuul.filter;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,10 @@ import com.netflix.zuul.exception.ZuulException;
 @Component
 public class LoginFilter extends ZuulFilter {
 
+	protected final String JWT_HEADER = "JWT"; // JWT的请求头
+	
+	protected final String PUBLIC_REQUEST = "/public/";
+	
 	/**
 	 *  判断是否要生效
 	 */
@@ -21,8 +26,8 @@ public class LoginFilter extends ZuulFilter {
 		RequestContext requestContext = RequestContext.getCurrentContext();
 		HttpServletRequest request = requestContext.getRequest();
 		
-		if(request.getRequestURI().startsWith("/gateway/res/api/res/listMenu/")) {
-			// 对以/gateway/res/api/res/listMenu/为开头的请求进行拦截
+		if(!isPublicRequest(request)) {
+			// 对以非public的请求进行拦截
 			return true;
 		}
 		
@@ -36,8 +41,9 @@ public class LoginFilter extends ZuulFilter {
 	public Object run() throws ZuulException {
 		RequestContext requestContext = RequestContext.getCurrentContext();
 		HttpServletRequest request = requestContext.getRequest();
+		String jwtToken = request.getHeader(JWT_HEADER);
 		
-		if(request.getRequestURI().endsWith("asnpgit")) {
+		if(StringUtils.isEmpty(jwtToken)) {
 			requestContext.setSendZuulResponse(false);//设置不放行
 			requestContext.setResponseStatusCode(HttpStatus.SC_FORBIDDEN);//返回403响应码
 		}
@@ -55,4 +61,7 @@ public class LoginFilter extends ZuulFilter {
 		return 4;
 	}
 
+	protected boolean isPublicRequest(HttpServletRequest request) {
+		return request.getRequestURI().contains(PUBLIC_REQUEST);
+	}
 }
