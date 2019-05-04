@@ -27,5 +27,5 @@ var loginObject = (function($) {
 } (jQuery));
 
 $(function() {
-//	loginObject.init();
+	loginObject.init();
 });
