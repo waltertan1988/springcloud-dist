@@ -43,6 +43,17 @@
 				<artifactId>springcloud-demo-repository</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>com.walter</groupId>
+				<artifactId>springcloud-auth-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.walter</groupId>
+				<artifactId>springcloud-auth-repository</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>
