@@ -11,10 +11,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.walter.auth.entity.JpaAclUser;
-import com.walter.auth.entity.JpaAclUserRole;
-import com.walter.auth.repository.AclUserRepository;
-import com.walter.auth.repository.AclUserRoleRepository;
+import com.walter.base.entity.JpaAclUser;
+import com.walter.base.entity.JpaAclUserRole;
+import com.walter.base.repository.AclUserRepository;
+import com.walter.base.repository.AclUserRoleRepository;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {

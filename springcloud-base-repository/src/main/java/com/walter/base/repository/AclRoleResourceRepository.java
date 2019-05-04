@@ -1,8 +1,8 @@
-package com.walter.auth.repository;
+package com.walter.base.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.walter.auth.entity.JpaAclRoleResource;
+import com.walter.base.entity.JpaAclRoleResource;
 
 public interface AclRoleResourceRepository extends JpaRepository<JpaAclRoleResource, Long>{
 

@@ -1,8 +1,8 @@
-package com.walter.auth.entity.enumeration.converter;
+package com.walter.base.entity.converter;
 
 import javax.persistence.AttributeConverter;
 
-import com.walter.auth.entity.JpaAclRoleResource;
+import com.walter.base.entity.JpaAclRoleResource;
 
 public class JpaAclRoleResourceResourceTypeEnumConverter implements AttributeConverter<JpaAclRoleResource.ResourceTypeEnum, String> {
 

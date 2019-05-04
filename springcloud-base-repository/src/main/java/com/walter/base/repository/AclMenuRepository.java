@@ -1,11 +1,11 @@
-package com.walter.auth.repository;
+package com.walter.base.repository;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.walter.auth.entity.JpaAclMenu;
+import com.walter.base.entity.JpaAclMenu;
 
 public interface AclMenuRepository extends JpaRepository<JpaAclMenu, Long>{
 

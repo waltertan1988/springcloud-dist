@@ -1,4 +1,4 @@
-package com.walter.auth.entity;
+package com.walter.base.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

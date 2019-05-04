@@ -1,10 +1,10 @@
-package com.walter.auth.repository;
+package com.walter.base.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.walter.auth.entity.JpaAclUserRole;
+import com.walter.base.entity.JpaAclUserRole;
 
 public interface AclUserRoleRepository extends JpaRepository<JpaAclUserRole, Long>{
 

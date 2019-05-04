@@ -1,4 +1,4 @@
-package com.walter.auth;
+package com.walter.base;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;

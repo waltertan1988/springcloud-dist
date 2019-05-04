@@ -1,4 +1,4 @@
-package com.walter.auth.entity;
+package com.walter.base.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

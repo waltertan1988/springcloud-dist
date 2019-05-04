@@ -1,4 +1,4 @@
-package com.walter.auth.entity;
+package com.walter.base.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.walter.auth.entity.enumeration.converter.JpaAclRoleResourceResourceTypeEnumConverter;
+import com.walter.base.entity.converter.JpaAclRoleResourceResourceTypeEnumConverter;
 
 @Entity
 @Table(name = "ACL_ROLE_RESOURCE", uniqueConstraints = {
