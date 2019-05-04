@@ -1,0 +1,10 @@
+# 自定义系统属性
+custom:
+  security:
+    httpBasicEnable: true
+    login:
+      jwt:
+        secret: AUTH-CENTER-JWT-SECRET
+        alivedMinutes: 60
+      rememberMe:
+        tokenValiditySeconds: 3600

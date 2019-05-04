@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableJpaAuditing
-@EntityScan("com.walter.auth.entity")
-@EnableJpaRepositories("com.walter.auth.repository")
+@EntityScan("com.walter.base.entity")
+@EnableJpaRepositories("com.walter.base.repository")
 public class JpaConfig {
 
 }
