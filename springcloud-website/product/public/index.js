@@ -7,7 +7,7 @@ var indexObject = (function($) {
 		        url: "http://localhost:7010/gateway/product/public/index?helloTo=WalterTanAndCathyChen",
 		        type: "GET",
 		        success: function (data) {
-		        	alert(data);
+		        	$("#content_body").html(data);
 		        }
 		    });
     	}
