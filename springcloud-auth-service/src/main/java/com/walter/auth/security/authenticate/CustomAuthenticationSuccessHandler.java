@@ -41,6 +41,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 			// 非ajax请求，重定向到之前的页面
 			super.onAuthenticationSuccess(request, response, authentication);
 		}else {
+			// 生成并返回JWT给客户端
 			String username = request.getParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY);
 			PrintWriter out = response.getWriter();
 			out.print(generateJwt(username));
