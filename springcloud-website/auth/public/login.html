@@ -5,7 +5,7 @@
 
 	<body>
 		<h1>欢迎登录</h1>
-		<form action="/login" method="POST">
+		<form id="usernamePasswordCaptchaLoginForm">
 			<h2>用户名+密码+验证码认证</h2>
 			<table>
 				<tr><td>账号：</td><td><input type="text" name="username" value="0009785"></td></tr>
@@ -20,7 +20,7 @@
 				<tr><td colspan="2">记住我：<input type="checkbox" name="remember-me"></td></tr>
 				<tr>
 					<td colspan="2">
-						<input type="submit" name="submit" value="登录">
+						<input type="button" id="formLoginBtn" name="submit" value="登录">
 						<input type="button" id="ajaxLoginBtn" value="AJAX访问受保护页面">
 					</td>
 				</tr>
@@ -51,5 +51,7 @@
 	<script type="text/javascript" src="../../js/jquery-1.7.min.js"></script>
 	<script type="text/javascript" src="../../js/jquery.tmpl.min.js"></script>
 	<script type="text/javascript" src="../../js/jquery.form.js"></script>
-	<script type="text/javascript" src="login.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="login.js" charset="UTF-8"></script>
+	<script type="text/javascript">loginObject.init();</script>
 </html>

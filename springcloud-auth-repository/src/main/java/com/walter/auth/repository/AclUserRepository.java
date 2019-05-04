@@ -9,7 +9,7 @@ import com.walter.auth.entity.JpaAclUser;
 
 public interface AclUserRepository extends JpaRepository<JpaAclUser, Long>{
 
-	@Query("FROM JpaSysUser o WHERE o.username=:usernameOrMobile OR o.mobile=:usernameOrMobile")
+	@Query("FROM JpaAclUser o WHERE o.username=:usernameOrMobile OR o.mobile=:usernameOrMobile")
 	public JpaAclUser findByUsernameOrMobile(String usernameOrMobile);
 	
 	public List<JpaAclUser> findByUserRealName(String userRealName);
