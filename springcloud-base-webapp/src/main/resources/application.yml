@@ -13,6 +13,16 @@ spring:
       number_format: '#.##'
       template_update_delay: 0
     template-loader-path: classpath:templates/
+
+  # Redis
+  redis:
+    host: localhost
+    port: 6379
+    password: 
+    lettuce:      pool:        max-active: 8
+        min-idle: 1
+        max-idle: 8
+        max-wait: 10000ms
   
   # spring cloud stream rabbitmq
   cloud:
