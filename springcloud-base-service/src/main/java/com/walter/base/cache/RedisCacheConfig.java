@@ -28,7 +28,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 	private int JWT_ALIVED_MINUTES;
 	
 
-	public final static String USER_AUTHENTICATION_CACHE = "user-authentication-cache";
+	public final static String USERNAME_SECURITY_CONTEXT_CACHE = "username-security-context-cache";
 	
 	// 自定义key生成器
 	@Bean
@@ -59,13 +59,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 		
 		// 设置一个初始化的缓存空间set集合
 		Set<String> cacheNames = new HashSet<>();
-		cacheNames.add(USER_AUTHENTICATION_CACHE);
+		cacheNames.add(USERNAME_SECURITY_CONTEXT_CACHE);
 //		cacheNames.add("other-biz-cache");
 
         // 对每个缓存空间应用不同的配置
 		Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
         // 通过Duration可以自己实现以什么时间为单位
-	    configMap.put(USER_AUTHENTICATION_CACHE, config.entryTtl(Duration.ofMinutes(JWT_ALIVED_MINUTES)));
+	    configMap.put(USERNAME_SECURITY_CONTEXT_CACHE, config.entryTtl(Duration.ofMinutes(JWT_ALIVED_MINUTES)));
 //	    configMap.put("other-biz-cache", config.entryTtl(Duration.ofMinutes(1)));
         
 		RedisCacheManager redisCacheManager = RedisCacheManager

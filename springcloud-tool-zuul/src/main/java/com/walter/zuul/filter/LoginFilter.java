@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import com.walter.base.util.JwtUtil;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 
 @Component
 public class LoginFilter extends ZuulFilter {
@@ -84,15 +84,6 @@ public class LoginFilter extends ZuulFilter {
 	 * @return
 	 */
 	protected Claims getClaimsFromJwt(String jwt) {
-	    Claims claims;
-	    try {
-	        claims = Jwts.parser()
-	                .setSigningKey(JWT_SECRET)
-	                .parseClaimsJws(jwt)
-	                .getBody();
-	    } catch (Exception e) {
-	        claims = null;
-	    }
-	    return claims;
+		return JwtUtil.getClaims(jwt, JWT_SECRET);
 	}
 }
