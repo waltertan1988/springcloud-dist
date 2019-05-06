@@ -49,6 +49,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 	public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
 		RedisCacheConfiguration config = RedisCacheConfiguration
 				.defaultCacheConfig()
+				.entryTtl(Duration.ofMinutes(JWT_ALIVED_MINUTES))
 				// 设置key的序列化方式
 				.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
 				// 设置value的序列化方式
@@ -58,19 +59,20 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 		
 		// 设置一个初始化的缓存空间set集合
 		Set<String> cacheNames = new HashSet<>();
-        cacheNames.add(USER_AUTHENTICATION_CACHE);
-//      cacheNames.add("other-biz-cache");
+		cacheNames.add(USER_AUTHENTICATION_CACHE);
+//		cacheNames.add("other-biz-cache");
 
         // 对每个缓存空间应用不同的配置
-        Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
+		Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
         // 通过Duration可以自己实现以什么时间为单位
-        configMap.put(USER_AUTHENTICATION_CACHE, config.entryTtl(Duration.ofMinutes(JWT_ALIVED_MINUTES)));
-//      configMap.put("other-biz-cache", config.entryTtl(Duration.ofMinutes(1)));
+	    configMap.put(USER_AUTHENTICATION_CACHE, config.entryTtl(Duration.ofMinutes(JWT_ALIVED_MINUTES)));
+//	    configMap.put("other-biz-cache", config.entryTtl(Duration.ofMinutes(1)));
         
 		RedisCacheManager redisCacheManager = RedisCacheManager
 				.builder(connectionFactory)
+				.cacheDefaults(config)
 				.initialCacheNames(cacheNames)// 注意这两句的调用顺序，一定要先调用该方法设置初始化的缓存名，再初始化相关的配置
-                .withInitialCacheConfigurations(configMap)
+				.withInitialCacheConfigurations(configMap)
 				.transactionAware()
 				.build();
 
