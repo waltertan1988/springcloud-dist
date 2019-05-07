@@ -5,6 +5,7 @@ custom:
     login:
       jwt:
         secret: AUTH-CENTER-JWT-SECRET
+        header: Jwt
         alivedMinutes: 60
       rememberMe:
         tokenValiditySeconds: 3600
