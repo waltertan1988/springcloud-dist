@@ -10,12 +10,14 @@ var roleListObject = (function($) {
 		        type: "GET",
 		        headers: ajaxHeader,
 		        error: function(xmlHttpRequest, textStatus, errorThrown){
+		        	var errText = xmlHttpRequest.status + "-" + xmlHttpRequest.statusText + ":" + xmlHttpRequest.responseText;
 		        	if("403" == xmlHttpRequest.status){
+		        		alert(errText);
 		        		// 客户端保存当前页面的URL到SessionStorage并跳转到登录页面
 			        	sessionStorage[_GOLBAL_CONSTANT.SESSION_STORAGE_KEY.LOGIN_CACHED_URL] = window.location.href;
 			        	window.location.href = _GOLBAL_CONSTANT.FORM_LOGIN.LOGIN_PAGE;
 		        	}else{
-		        		$("#content_header").html(xmlHttpRequest.status + ":" + xmlHttpRequest.statusText);
+		        		$("#content_header").html(errText);
 		        	}
 		        },
 		        success: function (data) {

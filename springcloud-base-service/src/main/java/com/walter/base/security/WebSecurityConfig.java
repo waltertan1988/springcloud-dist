@@ -13,10 +13,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.context.SecurityContextRepository;
 
-import com.walter.base.security.authenticate.CustomAuthenticationFailureHandler;
-import com.walter.base.security.authenticate.CustomAuthenticationSuccessHandler;
+import com.walter.base.security.authorize.CustomHttp403ForbiddenEntryPoint;
 import com.walter.base.security.props.CustomeSecurityProperties;
 
 @Configuration
@@ -29,9 +30,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	@Autowired
-	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	@Qualifier("customAuthenticationSuccessHandler")
+	private AuthenticationSuccessHandler authenticationSuccessHandler;
 	@Autowired
-	private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+	@Qualifier("customAuthenticationFailureHandler")
+	private AuthenticationFailureHandler authenticationFailureHandler;
 	@Autowired
 	@Qualifier("customSecurityContextRepository")
 	private SecurityContextRepository securityContextRepository;
@@ -62,14 +65,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登录处理的URL
 				.loginProcessingUrl(FORM_LOGIN_PROCESSING_URL)
 				// 认证成功/失败后的处理器
-				.successHandler(customAuthenticationSuccessHandler)
-				.failureHandler(customAuthenticationFailureHandler)
+				.successHandler(authenticationSuccessHandler)
+				.failureHandler(authenticationFailureHandler)
 				.and()
 			// 配置权限
 			.authorizeRequests()
 				.antMatchers(HttpMethod.GET, FORM_LOGIN_PROCESSING_URL).permitAll()
 //				.antMatchers("/admin/**").authenticated()
 				.anyRequest().authenticated()
+				.and()
+			.exceptionHandling()
+				// 自定义无权限时的处理行为
+				.authenticationEntryPoint(new CustomHttp403ForbiddenEntryPoint())
 				.and()
 			.csrf()
 				.disable();
