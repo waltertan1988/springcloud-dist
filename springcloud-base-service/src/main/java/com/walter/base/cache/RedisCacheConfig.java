@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -85,7 +85,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 	}
 
 	// value值序列化方式
-	private GenericJackson2JsonRedisSerializer valueSerializer() {
-		return new GenericJackson2JsonRedisSerializer();
+	private RedisSerializer<Object> valueSerializer() {
+		return new JdkSerializationRedisSerializer();
 	}
 }

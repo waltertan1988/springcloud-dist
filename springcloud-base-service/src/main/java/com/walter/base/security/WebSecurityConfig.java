@@ -2,6 +2,7 @@ package com.walter.base.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 import com.walter.base.security.authenticate.CustomAuthenticationFailureHandler;
 import com.walter.base.security.authenticate.CustomAuthenticationSuccessHandler;
@@ -30,6 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 	@Autowired
 	private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+	@Autowired
+	@Qualifier("customSecurityContextRepository")
+	private SecurityContextRepository securityContextRepository;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -48,6 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	protected void enableSecurity(HttpSecurity http) throws Exception {
 		http
+			.securityContext()
+				.securityContextRepository(securityContextRepository)
+				.and()
 			// 自定义表单认证
 			.formLogin()
 				// 登录处理的URL
