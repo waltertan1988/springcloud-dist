@@ -17,4 +17,11 @@ public interface SecurityContextCacheService {
 	 * @return
 	 */
 	public SecurityContext get(String username);
+
+	/**
+	 * 根据username从缓存删除SecurityContext
+	 * @param authentication
+	 * @return
+	 */
+	public void evict(String username);
 }

@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void enableSecurity(HttpSecurity http) throws Exception {
 		http
 			.securityContext()
+				// 使用Redis代替默认的HttpSession来保存SecurityContext
 				.securityContextRepository(securityContextRepository)
 				.and()
 			// 自定义表单认证

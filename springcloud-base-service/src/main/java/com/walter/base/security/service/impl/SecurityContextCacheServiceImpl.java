@@ -1,5 +1,6 @@
 package com.walter.base.security.service.impl;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContext;
@@ -18,8 +19,14 @@ public class SecurityContextCacheServiceImpl implements SecurityContextCacheServ
 	}
 
 	@Override
-	@Cacheable(cacheNames=RedisCacheConfig.USERNAME_SECURITY_CONTEXT_CACHE, key="#username")
+	@Cacheable(cacheNames=RedisCacheConfig.USERNAME_SECURITY_CONTEXT_CACHE, key="#username", unless="#result==null")
 	public SecurityContext get(String username) {
 		return null;
+	}
+	
+	@Override
+	@CacheEvict(cacheNames=RedisCacheConfig.USERNAME_SECURITY_CONTEXT_CACHE, key="#username")
+	public void evict(String username) {
+		
 	}
 }
