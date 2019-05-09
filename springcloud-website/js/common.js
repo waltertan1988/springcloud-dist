@@ -8,5 +8,9 @@ const _GOLBAL_CONSTANT = {
 		LOGIN_PAGE : "http://localhost:7010/auth/public/login.html",
 		LOGIN_PROCESSING_URL : "http://localhost:7010/gateway/auth/login",
 		JWT_HEADER_KEY : "Jwt"
+	},
+	
+	FORM_LOGOUT: {
+		LOGOUT_PROCESSING_URL : "http://localhost:7010/gateway/auth/logout"
 	}
 };
