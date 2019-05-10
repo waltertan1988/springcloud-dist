@@ -12,8 +12,8 @@ var loginObject = (function($) {
 			        	alert("登录失败："+xmlHttpRequest.status + "：" + xmlHttpRequest.responseText);
 			        },
 			        success: function (jwt) {
-			        	// 把JWT保存到SessionStorage
-			        	sessionStorage[_GOLBAL_CONSTANT.SESSION_STORAGE_KEY.JWT] = jwt;
+			        	// 把JWT保存到localStorage
+			        	localStorage[_GOLBAL_CONSTANT.LOCAL_STORAGE_KEY.JWT] = jwt;
 			        	
 			        	// 重新访问跳转到登录页前的URL页面
 			        	var cachedUrl = sessionStorage[_GOLBAL_CONSTANT.SESSION_STORAGE_KEY.LOGIN_CACHED_URL];

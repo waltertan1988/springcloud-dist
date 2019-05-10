@@ -1,6 +1,9 @@
 const _GOLBAL_CONSTANT = {
 	SESSION_STORAGE_KEY : {
-		LOGIN_CACHED_URL : "loginCachedUrl",
+		LOGIN_CACHED_URL : "loginCachedUrl"
+	},
+	
+	LOCAL_STORAGE_KEY : {
 		JWT : "jwt"
 	},
 

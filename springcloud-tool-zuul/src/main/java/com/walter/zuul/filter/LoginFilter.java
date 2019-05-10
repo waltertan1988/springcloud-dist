@@ -28,6 +28,8 @@ public class LoginFilter extends ZuulFilter {
 	
 	protected final String AUTH_LOGIN_REQUEST = "/auth/login";
 	
+	protected final String AUTH_LOGOUT_REQUEST = "/auth/logout";
+	
 	/**
 	 *  判断是否要生效
 	 */
@@ -53,6 +55,10 @@ public class LoginFilter extends ZuulFilter {
 		HttpServletRequest request = requestContext.getRequest();
 		
 		String jwtTokenValue = request.getHeader(JWT_HEADER);
+		
+		if(request.getRequestURI().endsWith(AUTH_LOGOUT_REQUEST)) {
+			return null;
+		}
 		
 		//检查Jwt是否存在或过期
 		if(StringUtils.isEmpty(jwtTokenValue) || null == getClaimsFromJwt(jwtTokenValue)) {

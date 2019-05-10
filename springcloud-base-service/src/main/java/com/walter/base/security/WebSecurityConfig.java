@@ -77,8 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			// 配置权限
 			.authorizeRequests()
 				.antMatchers(FORM_LOGIN_PROCESSING_URL, FORM_LOGOUT_PROCESSING_URL).permitAll()
-//				.antMatchers("/admin/**").authenticated()
-				.anyRequest().authenticated()
+				.antMatchers("/admin/**").authenticated()
+//				.anyRequest().authenticated()
 				.and()
 			.exceptionHandling()
 				// 自定义无权限时的处理行为
