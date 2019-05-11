@@ -15,10 +15,8 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.AntPathMatcher;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walter.base.entity.JpaAclAction;
 import com.walter.base.entity.JpaAclMenu;
 import com.walter.base.entity.JpaAclRoleResource;
@@ -26,7 +24,6 @@ import com.walter.base.repository.AclActionRepository;
 import com.walter.base.repository.AclMenuRepository;
 import com.walter.base.repository.AclRoleResourceRepository;
 import com.walter.base.security.authorize.messaging.binding.RefreshRoleResourceProcessor;
-import com.walter.base.security.authorize.messaging.message.RefreshRoleResourceMessage;
 
 /**
    * 自定义SecurityMetadataSource，可用于为资源动态授权
@@ -34,6 +31,8 @@ import com.walter.base.security.authorize.messaging.message.RefreshRoleResourceM
  */
 @EnableBinding({RefreshRoleResourceProcessor.class})
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+	
+	public static final String REFRESH_ROLE_RESOURCE_MESSAGE_BODY = "REFRESH_ROLE_RESOURCE_MESSAGE_BODY";
 	
 	private Map<String, String> URL_ROLE_MAPPING = new HashMap<>();
 	
@@ -79,6 +78,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 	}
 	
 	public void setupSecurityMetadataSource() {
+		URL_ROLE_MAPPING.clear();
 		Map<String, String> resourceUriMap = new HashMap<>();
 		for(JpaAclMenu jpaAclMenu : aclMenuRepository.findByIsGroup(false)) {
 			resourceUriMap.put(jpaAclMenu.getMenuCode(), jpaAclMenu.getUri());
@@ -100,28 +100,13 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 	
 	/**
 	 * 根据接收的消息类型，刷新资源角色配置
-	 * @param jsonStrMsg
+	 * @param msg
 	 * @throws IOException
 	 */
 	@StreamListener(RefreshRoleResourceProcessor.INPUT)
-	@Transactional
-	public void consumerMessage(String jsonStrMsg) throws IOException {
-		RefreshRoleResourceMessage refreshRoleResourceMessage = new ObjectMapper().readValue(jsonStrMsg, RefreshRoleResourceMessage.class);
-		String resourceCode = refreshRoleResourceMessage.getResourceCode();
-		JpaAclRoleResource.ResourceTypeEnum resourceType = refreshRoleResourceMessage.getResourceType();
-		String roleCode = refreshRoleResourceMessage.getRoleCode();
-		
-		if(RefreshRoleResourceMessage.OperationType.DELETE.equals(refreshRoleResourceMessage.getOperationType())) {
-			JpaAclRoleResource jpaAclRoleResource = aclRoleResourceRepository.getByResourceCodeAndResourceTypeEnumAndRoleCode(resourceCode, resourceType, roleCode);
-			if(null != jpaAclRoleResource) {
-				aclRoleResourceRepository.delete(jpaAclRoleResource);
-			}
-		}else if(RefreshRoleResourceMessage.OperationType.INSERT.equals(refreshRoleResourceMessage.getOperationType())) {
-			JpaAclRoleResource jpaAclRoleResource = new JpaAclRoleResource();
-			jpaAclRoleResource.setResourceCode(resourceCode);
-			jpaAclRoleResource.setResourceTypeEnum(resourceType);
-			jpaAclRoleResource.setRoleCode(roleCode);
-			aclRoleResourceRepository.save(jpaAclRoleResource);
+	public void consumerMessage(String msg){
+		if(REFRESH_ROLE_RESOURCE_MESSAGE_BODY.equals(msg)) {
+			setupSecurityMetadataSource();
 		}
 	}
 
