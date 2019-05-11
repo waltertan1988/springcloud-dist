@@ -63,7 +63,7 @@ public class LoginFilter extends ZuulFilter {
 		//检查Jwt是否存在或过期
 		if(StringUtils.isEmpty(jwtTokenValue) || null == getClaimsFromJwt(jwtTokenValue)) {
 			requestContext.setSendZuulResponse(false);//设置不放行
-			requestContext.setResponseStatusCode(HttpStatus.SC_FORBIDDEN);//返回403响应码
+			requestContext.setResponseStatusCode(HttpStatus.SC_UNAUTHORIZED);//返回401响应码
 		}
 		
 		return null;

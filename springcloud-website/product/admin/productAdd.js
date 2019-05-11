@@ -13,12 +13,12 @@ var productObject = (function($) {
 		        	$("#content_body").html(data);
 		        },
 		        error: function(xmlHttpRequest, textStatus, errorThrown){
-		        	if("403" == xmlHttpRequest.status){
+		        	if("401" == xmlHttpRequest.status){
 		        		// 客户端保存当前页面的URL到sessionStorage并跳转到登录页面
 		        		sessionStorage[_GOLBAL_CONSTANT.SESSION_STORAGE_KEY.LOGIN_CACHED_URL] = window.location.href;
 			        	window.location.href = _GOLBAL_CONSTANT.FORM_LOGIN.LOGIN_PAGE;
 		        	}else{
-		        		$("#content_header").html(xmlHttpRequest.status + ":" + xmlHttpRequest.statusText);
+		        		$("#content_body").html(xmlHttpRequest.status + ":" + xmlHttpRequest.statusText);
 		        	}
 		        }
 		    });

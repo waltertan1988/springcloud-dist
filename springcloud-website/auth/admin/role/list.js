@@ -14,7 +14,7 @@ var roleListObject = (function($) {
 		        },
 		        error: function(xmlHttpRequest, textStatus, errorThrown){
 		        	var errText = xmlHttpRequest.status + "-" + xmlHttpRequest.statusText + ":" + xmlHttpRequest.responseText;
-		        	if("403" == xmlHttpRequest.status){
+		        	if("401" == xmlHttpRequest.status){
 		        		alert(errText);
 		        		// 客户端保存当前页面的URL到sessionStorage并跳转到登录页面
 		        		sessionStorage[_GOLBAL_CONSTANT.SESSION_STORAGE_KEY.LOGIN_CACHED_URL] = window.location.href;

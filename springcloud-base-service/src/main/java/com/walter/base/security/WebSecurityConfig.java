@@ -1,10 +1,22 @@
 package com.walter.base.security;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.RoleHierarchyVoter;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,13 +24,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.expression.WebExpressionVoter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.context.SecurityContextRepository;
 
+import com.walter.base.security.authorize.CustomFilterInvocationSecurityMetadataSource;
 import com.walter.base.security.authorize.CustomHttp403ForbiddenEntryPoint;
 import com.walter.base.security.props.CustomeSecurityProperties;
+import com.walter.base.security.service.RoleHierarchyService;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomeSecurityProperties customeSecurityProperties;
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
 	@Autowired
 	@Qualifier("customAuthenticationSuccessHandler")
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -41,7 +57,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	@Qualifier("customLogoutSuccessHandler")
 	private LogoutSuccessHandler logoutSuccessHandler;
+	@Autowired
+	private UserDetailsService userDetailsService;
+	@Autowired
+	private RoleHierarchyService roleHierarchyService;
 
+	@Bean
+    public AccessDecisionManager accessDecisionManager() {
+        List<AccessDecisionVoter<? extends Object>> decisionVoters = Arrays.asList(
+            new WebExpressionVoter(),
+            //添加层次角色投票者
+            new RoleHierarchyVoter(roleHierarchy()),
+            new AuthenticatedVoter());
+        return new AffirmativeBased(decisionVoters);
+    }
+	
+	@Bean
+	public RoleHierarchy roleHierarchy(){
+		// 层次角色
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        roleHierarchy.setHierarchy(roleHierarchyService.getRoleHierarchyString());
+        return roleHierarchy;
+    }
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -79,6 +117,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(FORM_LOGIN_PROCESSING_URL, FORM_LOGOUT_PROCESSING_URL).permitAll()
 				.antMatchers("/admin/**").authenticated()
 //				.anyRequest().authenticated()
+				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+					@Override
+					public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
+						// 自定义SecurityMetadataSource
+						customFilterInvocationSecurityMetadataSource.setSecurityMetadataSource(fsi.getSecurityMetadataSource());
+						customFilterInvocationSecurityMetadataSource.setupSecurityMetadataSource();
+						fsi.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource);
+						
+						// 自定义AccessDecisionManager并添加RoleVoter
+						fsi.setAccessDecisionManager(accessDecisionManager());
+						
+						return fsi;
+					}
+				})
 				.and()
 			.exceptionHandling()
 				// 自定义无权限时的处理行为

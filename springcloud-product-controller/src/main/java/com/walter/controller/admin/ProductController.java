@@ -1,16 +1,15 @@
 package com.walter.controller.admin;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.walter.base.controller.admin.BaseAdminController;
 
 @RestController
-@RequestMapping("/admin")
-public class ProductController {
+public class ProductController extends BaseAdminController{
 	
 	@GetMapping("/product/add")
-	public String list(@RequestParam("product")String product) {
+	public String add(@RequestParam("product")String product) {
 		return product;
 	}
 }
