@@ -20,7 +20,7 @@ var roleListObject = (function($) {
 		        		sessionStorage[_GOLBAL_CONSTANT.SESSION_STORAGE_KEY.LOGIN_CACHED_URL] = window.location.href;
 			        	window.location.href = _GOLBAL_CONSTANT.FORM_LOGIN.LOGIN_PAGE;
 		        	}else{
-		        		$("#content_header").html(errText);
+		        		$("#content_body").html(errText);
 		        	}
 		        }
 		    });
