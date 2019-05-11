@@ -4,6 +4,8 @@ package com.walter.base.security;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,6 +32,8 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 
 import com.walter.base.security.authenticate.filter.CaptchaValidationCodeFilter;
@@ -42,7 +46,8 @@ import com.walter.base.security.service.RoleHierarchyService;
 @EnableWebSecurity
 @EnableConfigurationProperties(CustomeSecurityProperties.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+	@Autowired
+	private DataSource dataSource;
 	@Autowired
 	private CustomeSecurityProperties customeSecurityProperties;
 	@Autowired
@@ -84,6 +89,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return roleHierarchy;
     }
 	
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+		jdbcTokenRepositoryImpl.setDataSource(dataSource);
+		return jdbcTokenRepositoryImpl;
+	}
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -117,6 +129,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.logout()
 				.logoutSuccessHandler(logoutSuccessHandler)
+				.and()
+			// 配置RememberMe功能
+			.rememberMe()
+				// 保存RememberMe的token的方式为数据库保存
+				.tokenRepository(persistentTokenRepository())
+				.tokenValiditySeconds(customeSecurityProperties.getLogin().getRememberMeTokenValiditySeconds())
+				.userDetailsService(userDetailsService)
 				.and()
 			// 配置权限
 			.authorizeRequests()
