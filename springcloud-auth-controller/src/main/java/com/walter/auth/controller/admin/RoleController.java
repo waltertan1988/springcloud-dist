@@ -1,4 +1,4 @@
-package com.walter.controller.admin;
+package com.walter.auth.controller.admin;
 
 import java.util.List;
 

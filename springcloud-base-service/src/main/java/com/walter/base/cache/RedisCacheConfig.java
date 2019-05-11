@@ -27,8 +27,14 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 	@Value("${custom.security.login.jwt.alivedMinutes}")
 	private int JWT_ALIVED_MINUTES;
 	
-
+	@Value("${custom.security.login.captcha.alivedSeconds}")
+	private int CAPTCHA_ALIVED_SECONDS;
+	
+	/**缓存SecurityContext*/
 	public final static String USERNAME_SECURITY_CONTEXT_CACHE = "username-security-context-cache";
+	
+	/**缓存登录时的图片验证码*/
+	public final static String LOGIN_CAPTCHA_CACHE = "login-captcha-cache";
 	
 	// 自定义key生成器
 	@Bean
@@ -60,13 +66,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 		// 设置一个初始化的缓存空间set集合
 		Set<String> cacheNames = new HashSet<>();
 		cacheNames.add(USERNAME_SECURITY_CONTEXT_CACHE);
-//		cacheNames.add("other-biz-cache");
+		cacheNames.add(LOGIN_CAPTCHA_CACHE);
 
         // 对每个缓存空间应用不同的配置
 		Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
         // 通过Duration可以自己实现以什么时间为单位
 	    configMap.put(USERNAME_SECURITY_CONTEXT_CACHE, config.entryTtl(Duration.ofMinutes(JWT_ALIVED_MINUTES)));
-//	    configMap.put("other-biz-cache", config.entryTtl(Duration.ofMinutes(1)));
+	    configMap.put(LOGIN_CAPTCHA_CACHE, config.entryTtl(Duration.ofMinutes(CAPTCHA_ALIVED_SECONDS)));
         
 		RedisCacheManager redisCacheManager = RedisCacheManager
 				.builder(connectionFactory)

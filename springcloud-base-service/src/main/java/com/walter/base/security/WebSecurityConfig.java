@@ -28,9 +28,11 @@ import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.context.SecurityContextRepository;
 
+import com.walter.base.security.authenticate.filter.CaptchaValidationCodeFilter;
 import com.walter.base.security.authorize.CustomFilterInvocationSecurityMetadataSource;
 import com.walter.base.security.authorize.CustomHttp403ForbiddenEntryPoint;
 import com.walter.base.security.props.CustomeSecurityProperties;
@@ -57,6 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	@Qualifier("customLogoutSuccessHandler")
 	private LogoutSuccessHandler logoutSuccessHandler;
+	@Autowired
+	private CaptchaValidationCodeFilter captchaValidationCodeFilter;
 	@Autowired
 	private UserDetailsService userDetailsService;
 	@Autowired
@@ -97,6 +101,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	protected void enableSecurity(HttpSecurity http) throws Exception {
 		http
+			// 自定义图片验证码认证过滤器
+			.addFilterBefore(captchaValidationCodeFilter, UsernamePasswordAuthenticationFilter.class)
 			.securityContext()
 				// 使用Redis代替默认的HttpSession来保存SecurityContext
 				.securityContextRepository(securityContextRepository)
@@ -149,6 +155,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	/** 图片验证码在表单中的name */
 	public static final String CUSTOM_SECURITY_FORM_CAPTCHA_KEY = "captcha";
+	/** 图片验证码的缓存key在header中的 name */
+	public static final String CUSTOM_SECURITY_FORM_CAPTCHA_CACHE_KEY = "captcha-cache-key";
 	/** 手机短信验证码在表单中的name */
 	public static final String CUSTOM_SECURITY_SMA_VALIDATION_CODE_KEY = "sms-validation-code";
 }
