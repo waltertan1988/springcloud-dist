@@ -13,6 +13,19 @@ custom:
         tokenValiditySeconds: 3600
 
 spring:
+  # Redis
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password: 
+    lettuce:
+      pool:
+        max-active: 8
+        min-idle: 1
+        max-idle: 8
+        max-wait: 10000ms
+
   # spring cloud stream rabbitmq
   cloud:
     stream:

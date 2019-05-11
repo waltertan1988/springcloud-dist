@@ -122,7 +122,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers(FORM_LOGIN_PROCESSING_URL, FORM_LOGOUT_PROCESSING_URL).permitAll()
 				.antMatchers("/admin/**").authenticated()
-//				.anyRequest().authenticated()
 				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
 					@Override
 					public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
