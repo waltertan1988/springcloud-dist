@@ -33,6 +33,7 @@ var loginObject = (function($) {
 			        success: function (jwt) {
 			        	// 把JWT保存到localStorage
 			        	localStorage[_GOLBAL_CONSTANT.LOCAL_STORAGE_KEY.JWT] = jwt;
+			        	// 移除验证码在Redis的key
 			        	localStorage.removeItem(_GOLBAL_CONSTANT.LOCAL_STORAGE_KEY.CAPTCHA_CACHE_KEY);
 			        	
 			        	// 重新访问跳转到登录页前的URL页面
